@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SidenavComponent } from '../home/sidenav/sidenav.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 
 @NgModule({
-  declarations: [SidenavComponent],
+  declarations: [ SidebarComponent],
   imports: [
     CommonModule
   ],
   exports:[
-    SidenavComponent
+    SidebarComponent
   ]
 })
 export class SharedModule { }

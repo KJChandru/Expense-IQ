@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SidenavComponent } from './sidenav/sidenav.component';
-import { NavComponent } from './nav/nav.component';
+import { HomeComponent } from './home/home.component';
+import { ExpenseRoutingModule } from './expense-routing.module';
 import { SharedModule } from '../shared/shared.module';
-
 
 
 @NgModule({
   declarations: [
-    NavComponent
+    HomeComponent
+    
   ],
   imports: [
     CommonModule,
-    SharedModule,
-
+    ExpenseRoutingModule,
+    SharedModule
   ]
 })
-export class HomeModule { }
+export class ExpenseModule { }
