@@ -1,0 +1,23 @@
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+
+  <div class="sidebar-header">
+    <div class="logo-section">
+      <img src="../../../assets/Menu-icons/expenses.png" alt="Logo" class="logo-img" /> 
+      <!-- <div class="logo-title">Expense IQ</div> -->
+    </div>
+  </div>
+
+  <div class="menu">
+    <ul class="nav">
+      <li><img src="../../../assets/Menu-icons/dashboard1.png" class="menu-img"> <span class="link-text">Dashboard</span></li>
+        <div class="divider"></div>
+       <li><img src="../../../assets/Menu-icons/Recurring.png" class="menu-img"> <span class="link-text">Recurring</span></li>
+           <div class="divider"></div>
+       <li><img src="../../../assets/Menu-icons/stats.png" class="menu-img"> <span class="link-text">Stats</span></li>
+       <div class="divider"></div>
+       <li><img src="../../../assets/Menu-icons/settings.png" class="menu-img"> <span class="link-text">Settings</span></li>
+       <div class="divider"></div>
+    </ul>
+  </div>
+</div>
