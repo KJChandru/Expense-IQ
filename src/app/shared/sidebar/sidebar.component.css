@@ -1,7 +1,7 @@
 .sidebar {
   width: 280px;
   height: 100vh;
-  background-color: #170362;
+  background-color: #060312;
   color: white;
   padding: 20px 12px;
   box-sizing: border-box;
@@ -88,7 +88,7 @@
 }
 
 .nav li:hover {
-  background-color: #463581;
+  background-color: #3a3841;
 }
 
 .icon {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,9 +7,25 @@ import { Component } from '@angular/core';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-isCollapsed = false;
+
+  constructor(private router:Router){}
+
+  isCollapsed = false;
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
+  }
+
+  navigatetodashboard(){
+    this.router.navigate(['/expense/dashboard'])
+  }
+  navigatetoRecurring(){
+    this.router.navigate(['/expense/recurring'])
+  }
+  navigatetostats(){
+  this.router.navigate(['/expense/stats'])
+  }
+  navigatetosettings(){
+  this.router.navigate(['/expense/settings'])
   }
 }
