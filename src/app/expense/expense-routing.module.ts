@@ -1,20 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { RecurringComponent } from './recurring/recurring.component';
 import { StatsComponent } from './stats/stats.component';
 import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
-  { path: 'dashboard', component: HomeComponent },
-  { path: 'recurring', component: RecurringComponent },
-  { path: 'stats', component: StatsComponent },
-  { path: 'settings', component: SettingsComponent },
-  {path:'',component:HomeComponent}
+  {
+    path: '',
+    component: SidebarComponent,
+    children: [
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'recurring', component: RecurringComponent },
+      { path: 'stats', component: StatsComponent },
+      { path: 'settings', component: SettingsComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+    ]
+  }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ExpenseRoutingModule {}
+export class ExpenseRoutingModule { }

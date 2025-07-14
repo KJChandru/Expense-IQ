@@ -1,19 +1,19 @@
 <div class="login-container">
   <div class="login-box">
     <div class="logo">
-         <img src="../../../assets/expenses.png">
+         <img src="../../../assets/icon.png">
     </div>
     <h2>Expense IQ</h2>
     <p>Let’s get you signed in securely.</p>
 
-    <form>
-      <input formControlName="Firstname" type="text" placeholder="Firstname" />
-      <input formControlName="Lastname" type="text" placeholder="Lastname" />
-      <input formControlName="UserId" type="text" placeholder="UserName" />
-      <input formControlName="Email" type="Email" placeholder="Email" />
-      <input formControlName="Password" type="password" placeholder="Password" />
+    <form [formGroup]="RegisterForm">
+        
+      <input formControlName="firstName" type="text" placeholder="Firstname" />
+      <input formControlName="lastName" type="text" placeholder="Lastname" />
+      <input formControlName="username" type="text" placeholder="UserName" />
+      <input formControlName="password" type="password" placeholder="Password" />
       
-      <button type="submit" class="submit-btn">Sign Up</button>
+      <button type="submit" class="submit-btn" (click)="OnCreateUser()">Sign Up</button>
     </form>
     <!-- <div class="divider"><span>Or</span></div>
     <button class="login-btn google-btn">

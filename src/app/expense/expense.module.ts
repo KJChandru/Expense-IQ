@@ -1,25 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home/home.component';
+
 import { ExpenseRoutingModule } from './expense-routing.module';
-import { SharedModule } from '../shared/shared.module';
+import { ExpenseComponent } from './expense.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { RecurringComponent } from './recurring/recurring.component';
 import { StatsComponent } from './stats/stats.component';
 import { SettingsComponent } from './settings/settings.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 @NgModule({
   declarations: [
-    HomeComponent,
+    ExpenseComponent,
+    DashboardComponent,
     RecurringComponent,
     StatsComponent,
-    SettingsComponent
-    
+    SettingsComponent,
+    SidebarComponent
   ],
   imports: [
     CommonModule,
-    ExpenseRoutingModule,
-    SharedModule
+    ExpenseRoutingModule
   ]
 })
 export class ExpenseModule { }

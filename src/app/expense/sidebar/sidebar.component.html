@@ -1,0 +1,92 @@
+<!-- <nav>
+  <ul>
+    <li><a routerLink="dashboard">Dashboard</a></li>
+    <li><a routerLink="recurring">Recurring</a></li>
+    <li><a routerLink="stats">Stats</a></li>
+    <li><a routerLink="settings">Settings</a></li>
+  </ul>
+</nav>
+<router-outlet></router-outlet> -->
+<div class="layout">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-section">
+        <img src="../../../assets/Menu-icons/expenses.png" alt="Logo" class="logo-img" />
+      </div>
+    </div>
+
+    <div class="menu">
+      <ul class="nav">
+        <li routerLink="dashboard">
+          <img src="../../../assets/Menu-icons/dashboard.png" class="menu-img" />
+          <span class="link-text">Dashboard</span>
+        </li>
+        <div class="divider"></div>
+
+        <li routerLink="recurring">
+          <img src="../../../assets/Menu-icons/Recurring.png" class="menu-img" />
+          <span class="link-text">Recurring</span>
+        </li>
+        <div class="divider"></div>
+
+        <li routerLink="stats">
+          <img src="../../../assets/Menu-icons/stats.png" class="menu-img" />
+          <span class="link-text">Stats</span>
+        </li>
+        <div class="divider"></div>
+
+        <li routerLink="settings">
+          <img src="../../../assets/Menu-icons/settings.png" class="menu-img" />
+          <span class="link-text">Settings</span>
+        </li>
+        <div class="divider"></div>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main content area -->
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+
+<!-- sidebar.component.html -->
+<!-- <div class="layout">
+  <div class="sidebar" >
+    <div class="sidebar-header">
+      <div class="logo-section">
+        <img src="../../../assets/Menu-icons/expenses.png" alt="Logo" class="logo-img" /> 
+      </div>
+    </div>
+
+    <div class="menu">
+      <ul class="nav">
+        <li routerLink="dashboard">
+          <span src="../../../assets/Menu-icons/dashboard.png" class="menu-img"> </span>
+          <span class="link-text">Dashboard</span>
+        </li>
+        <div class="divider"></div>
+        <li routerLink="recurring" >
+          <span src="../../../assets/Menu-icons/Recurring.png" class="menu-img"> </span>
+          <span  class="link-text">Recurring</span>
+        </li>
+        <div class="divider"></div>
+        <li routerLink="stats" >
+          <span src="../../../assets/Menu-icons/stats.png" class="menu-img"> </span>
+          <span   class="link-text">Stats</span>
+        </li>
+        <div class="divider"></div>
+        <li routerLink="settings">
+          <span src="../../../assets/Menu-icons/settings.png" class="menu-img"></span>
+          <span   class="link-text">Settings</span>
+        </li>
+        <div class="divider"></div>
+      </ul>
+    </div>
+  </div>
+<router-outlet></router-outlet>
+  
+</div> -->
+
