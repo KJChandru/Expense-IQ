@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RecurringComponent } from './recurring/recurring.component';
 import { StatsComponent } from './stats/stats.component';
 import { SettingsComponent } from './settings/settings.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: 'recurring', component: RecurringComponent },
       { path: 'stats', component: StatsComponent },
       { path: 'settings', component: SettingsComponent },
+      { path: 'wallet', component: WalletComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   }
