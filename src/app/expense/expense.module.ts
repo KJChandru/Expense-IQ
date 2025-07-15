@@ -8,6 +8,7 @@ import { RecurringComponent } from './recurring/recurring.component';
 import { StatsComponent } from './stats/stats.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     RecurringComponent,
     StatsComponent,
     SettingsComponent,
-    SidebarComponent
+    SidebarComponent,
+    WalletComponent
   ],
   imports: [
     CommonModule,
