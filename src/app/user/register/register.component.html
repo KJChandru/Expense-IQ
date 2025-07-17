@@ -1,25 +1,44 @@
 <div class="login-container">
   <div class="login-box">
     <div class="logo">
-         <img src="../../../assets/logo.png">
+      <img src="../../../assets/logo.png">
     </div>
     <h2>Expense IQ</h2>
     <p>Let’s get you signed in securely.</p>
 
     <form [formGroup]="RegisterForm">
-        
+
       <input formControlName="firstName" type="text" placeholder="Firstname" />
+      <div class="error" *ngIf="RegisterForm.get('firstName')?.touched && RegisterForm.get('firstName')?.invalid">
+        <span *ngIf="RegisterForm.get('firstName')?.errors?.['required']">Firstname required</span>
+        <span *ngIf="RegisterForm.get('firstName')?.errors?.['minlength']"> Minimum 3 Charcters Needed</span>
+        <span *ngIf="RegisterForm.get('firstName')?.errors?.['maxlength']"> Max 20 Charcters Allowed</span>
+      </div>
+
+
       <input formControlName="lastName" type="text" placeholder="Lastname" />
+      <div class="error" *ngIf="RegisterForm.get('lastName')?.touched && RegisterForm.get('firstName')?.invalid">
+        <span *ngIf="RegisterForm.get('lastName')?.errors?.['required']"> LastName required</span>
+        <span *ngIf="RegisterForm.get('lastName')?.errors?.['minlength']"> Minimum 3 Charcters Needed</span>
+        <span *ngIf="RegisterForm.get('lastName')?.errors?.['maxlength']"> Max 20 Charcters Allowed</span>
+      </div>
+
       <input formControlName="username" type="text" placeholder="UserName" />
+      <div class="error" *ngIf="RegisterForm.get('username')?.touched && RegisterForm.get('username')?.invalid">
+        <span *ngIf="RegisterForm.get('username')?.errors?.['required']">  Username required</span>
+        <span *ngIf="RegisterForm.get('username')?.errors?.['minlength']"> Minimum 3 Charcters Needed</span>
+        <span *ngIf="RegisterForm.get('username')?.errors?.['maxlength']"> Max 20 Charcters Allowed</span>
+      </div>
+
       <input formControlName="password" type="password" placeholder="Password" />
-      
+      <div class="error" *ngIf="RegisterForm.get('password')?.touched && RegisterForm.get('password')?.invalid">
+        <span *ngIf="RegisterForm.get('password')?.errors?.['required']">Password required</span>
+        <span *ngIf="RegisterForm.get('password')?.errors?.['pattern']"> PasswordShould match Pattern</span>
+      </div>
+
+
       <button type="submit" class="submit-btn" (click)="OnCreateUser()">Sign Up</button>
     </form>
-    <!-- <div class="divider"><span>Or</span></div>
-    <button class="login-btn google-btn">
-      <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
-      Continue with Google
-    </button> -->
 
 
     <p class="signup-text">
