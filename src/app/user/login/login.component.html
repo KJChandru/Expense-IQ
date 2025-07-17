@@ -8,16 +8,21 @@
 
     <form [formGroup]="LoginForm">
       <input formControlName="UserName" type="text" placeholder="Username" />
+      <div class="error" *ngIf="LoginForm.get('UserName')?.touched && LoginForm.get('UserName')?.invalid">
+        <span *ngIf="LoginForm.get('UserName')?.errors?.['required']">  Username required</span>
+        <span *ngIf="LoginForm.get('UserName')?.errors?.['minlength']"> Minimum 3 Charcters Needed</span>
+        <span *ngIf="LoginForm.get('UserName')?.errors?.['maxlength']"> Max 20 Charcters Allowed</span>
+      </div>
+
       <input formControlName="password" type="password" placeholder="Password" />
+     <div class="error" *ngIf="LoginForm.get('password')?.touched && LoginForm.get('password')?.invalid">
+        <span *ngIf="LoginForm.get('password')?.errors?.['required']">Password required</span>
+        <span *ngIf="LoginForm.get('password')?.errors?.['pattern']"> PasswordShould match Pattern</span>
+      </div>
      
       <button type="submit" class="submit-btn" (click)="LoginUser()">Log In</button>
     </form>
-    <!-- <div class="divider"><span>Or</span></div>
-    <button class="login-btn google-btn">
-      <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
-      Continue with Google
-    </button>
- -->
+  
 
     <p class="signup-text">
       Don’t Have an Account?

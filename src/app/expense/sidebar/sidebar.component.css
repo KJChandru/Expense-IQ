@@ -1,7 +1,7 @@
 .sidebar {
   width: 280px;
   height: 100vh;
-  background-color: #060312;
+  background-color: #150256;
   color: white;
   padding: 20px 12px;
   box-sizing: border-box;
@@ -17,15 +17,21 @@
 
 .sidebar-header {
   display: flex;
-  justify-content: center; /* Center the logo section */
+  justify-content: center;   /* Horizontally center */
+  align-items: center;       /* Vertically center */
+  height: 60px;              /* Add a fixed height */
+  font-size: 20px;           /* Optional: better text size */
+  color: #fefefe;               /* Optional: readable color */
   margin-bottom: 30px;
 }
 
 
 .logo-section {
   display: flex;
-  flex-direction: column;   /* Stack logo and title vertically */
-  align-items: center;      /* Center horizontally */
+  flex-direction: column;
+  /* Stack logo and title vertically */
+  align-items: center;
+  /* Center horizontally */
   gap: 10px;
 }
 
@@ -56,8 +62,10 @@
   cursor: pointer;
   padding: 4px 10px;
   margin-bottom: 20px;
-  align-self: flex-start; /* Optional: aligns button to the left inside sidebar */
+  align-self: flex-start;
+  /* Optional: aligns button to the left inside sidebar */
 }
+
 .sidebar.collapsed .logo-title,
 .sidebar.collapsed .link-text {
   display: none;
@@ -89,7 +97,7 @@
 }
 
 .nav li:hover {
-  background-color: #3a3841;
+  background-color: #3b2e75;
 }
 
 .icon {
@@ -141,5 +149,16 @@
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  background-color: #f5f5f5; /* Optional */
+  background-color: #f5f5f5;
+  /* Optional */
+}
+
+.active-menu {
+  background-color: #3b2e75;
+  color: #ffffff;
+  width: 268px
+}
+
+.active-menu .menu-img {
+  filter: brightness(1.2);
 }

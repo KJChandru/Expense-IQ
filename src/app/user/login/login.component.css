@@ -136,3 +136,21 @@ input[type="text"] {
   color: #1a73e8;
   text-decoration: none;
 }
+
+.error {
+  color: red;
+  font-size: 13px;
+  margin-top: 4px;
+  margin-bottom: 10px;
+  display: flex;
+  font-weight: 500;
+  line-height: 1.4;
+}
+input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
