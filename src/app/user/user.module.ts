@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox'; 
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserService } from './Service/user.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -20,12 +22,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     UserRoutingModule,
     ReactiveFormsModule,
+    HttpClientModule,
 
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule
+  ],
+  providers: [
+    UserService  
   ]
 })
 export class UserModule { }

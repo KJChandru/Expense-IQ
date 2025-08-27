@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserModel } from 'src/app/environment/Model';
+import { UserService } from '../Service/user.service';
 
 @Component({
   selector: 'app-register',
@@ -7,10 +9,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  ReguserDetails!:UserModel
   RegisterForm!: FormGroup;
   passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private userService:UserService) {
     this.RegisterForm = this.fb.group({
       id: ['0'],
       username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
@@ -18,12 +21,23 @@ export class RegisterComponent {
       lastName: ['', [Validators.required, Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       password: ['', [
         Validators.required,
-        Validators.pattern(this.passwordRegex)
+        // Validators.pattern(this.passwordRegex)
       ]],
     })
   }
 
   OnCreateUser() {
-    console.log(this.RegisterForm.value)
+    // this.ReguserDetails.Firstname=this.RegisterForm
+    this.ReguserDetails = this.RegisterForm.value;
+    this.userService.registerUser(this.ReguserDetails).subscribe(
+      (res)=>{
+        console.log(res)
+      },
+      (err)=>{
+        console.log(err)
+      }
+    )
+
+    console.log(this.ReguserDetails)
   }
 }
