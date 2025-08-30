@@ -6,5 +6,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 @tailwind components;
 @tailwind utilities;
 
+
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.toast-top-right {
+  top: 1rem !important;
+  right: 1rem !important;
+}
+
+#toast-container > .toast {
+  font-size: 14px;
+  border-radius: 6px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
