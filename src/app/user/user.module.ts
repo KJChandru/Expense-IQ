@@ -10,7 +10,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox'; 
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './Service/user.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+
+import {  ToastrModule, ToastrService } from 'ngx-toastr';
 
 
 @NgModule({
@@ -28,10 +30,14 @@ import { HttpClientModule } from '@angular/common/http';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+     ToastrModule
   ],
   providers: [
-    UserService  
+    UserService  ,
   ]
 })
 export class UserModule { }
+
+    
+
