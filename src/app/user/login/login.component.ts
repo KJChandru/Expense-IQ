@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, RequiredValidator, Validators } from '@angular/forms';
+import { UserService } from '../Service/user.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-login',
@@ -9,14 +14,34 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, RequiredValid
 export class LoginComponent {
   LoginForm !:FormGroup
 
-  constructor(private fb:FormBuilder){
+  constructor(private fb:FormBuilder, private userService:UserService,private toasterService:ToastrService,private route:Router){
     this.LoginForm= this.fb.group({
       'UserName': [null,Validators.required],
       'password':[null,Validators.required]
     })
   }
 LoginUser(){
-  console.log(this.LoginForm.value)
+  
+  this.userService.loginUser(this.LoginForm.value).subscribe(
+    res=>{
+      
+      if(res.result.Out=1){
+        this.toasterService.success(res.result.Message, 'Success')
+        this.route.navigate(['/expense/dashboard']);
+      }
+       else if (res.result.Out === -1 && res.result.Error?.length) {
+      this.toasterService.error(res.result.Error[0].errorMsg, 'Error');
+    }
+    },
+    err=>{
+      const apiErrorMsg =  err.Error.errorMsg;
+    if (apiErrorMsg) {
+      this.toasterService.error(apiErrorMsg, 'Error');
+    } else {
+      this.toasterService.error('Server error. Please try again later.', 'Error');
+    }
+    }
+  )
 }
 
 

@@ -14,5 +14,8 @@ constructor(private _httpclient:HttpClient){}
 registerUser(data: UserModel):Observable<any>{
     return this._httpclient.post<any>(Environment.baseurl+'user/register',data)
 }
+loginUser(data: UserModel):Observable<any>{
+    return this._httpclient.post<any>(Environment.baseurl+'user/login',data)
+}
  
 }
