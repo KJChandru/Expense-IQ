@@ -1,0 +1,69 @@
+<!-- Overlay -->
+<div *ngIf="isOpen" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+
+  <!-- Modal Card -->
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 relative animate-fadeIn">
+
+    <!-- Close Button -->
+    <button (click)="close()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700">
+      <span class="material-icons">close</span>
+    </button>
+
+    <!-- Header -->
+    <div class="text-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-900">Create New Wallet</h2>
+      <p class="text-gray-500 text-sm mt-1">Add a new wallet to manage your finances</p>
+    </div>
+
+    <!-- Form -->
+    <form (ngSubmit)="submit()" class="flex flex-col gap-4">
+
+      <!-- Wallet Name -->
+      <div class="flex flex-col">
+        <label class="text-gray-700 font-medium mb-1">Wallet Name</label>
+        <input type="text"  name="walletName" required
+               placeholder="e.g., Main Bank" 
+               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+      </div>
+
+      <!-- Initial Balance -->
+      <div class="flex flex-col">
+        <label class="text-gray-700 font-medium mb-1">Initial Balance</label>
+        <input type="number"  name="walletBalance" required
+               placeholder="0.00" 
+               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+      </div>
+
+      <!-- Currency & Type (Two Columns) -->
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Currency -->
+        <div class="flex flex-col">
+          <label class="text-gray-700 font-medium mb-1">Currency</label>
+          <select  name="walletCurrency" required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+            <option value="USD">USD</option>
+            <option value="INR">INR</option>
+            <option value="EUR">EUR</option>
+          </select>
+        </div>
+
+        <!-- Wallet Type -->
+        <div class="flex flex-col">
+          <label class="text-gray-700 font-medium mb-1">Wallet Type</label>
+          <select  name="walletType" required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+            <option value="bank">Bank</option>
+            <option value="cash">Cash</option>
+            <option value="card">Card</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit"
+              class="mt-4 w-full py-3 bg-blue-600 text-white font-semibold rounded-2xl hover:bg-blue-700 transition">
+        Create Wallet
+      </button>
+    </form>
+  </div>
+</div>

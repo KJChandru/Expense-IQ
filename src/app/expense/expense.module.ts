@@ -9,6 +9,7 @@ import { StatsComponent } from './stats/stats.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { CreateWalletComponent } from './create-wallet/create-wallet.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { WalletComponent } from './wallet/wallet.component';
     StatsComponent,
     SettingsComponent,
     SidebarComponent,
-    WalletComponent
+    WalletComponent,
+    CreateWalletComponent
   ],
   imports: [
     CommonModule,
