@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserModel } from 'src/app/environment/Model';
 import { UserService } from '../Service/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,9 @@ export class RegisterComponent {
   RegisterForm!: FormGroup;
   passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/;
 
-  constructor(private fb: FormBuilder, private userService:UserService,private toasterService:ToastrService) {
+  constructor(private fb: FormBuilder, private userService:UserService,private toasterService:ToastrService,
+    private router:Router
+  ) {
     this.RegisterForm = this.fb.group({
       id: ['0'],
       username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
@@ -36,6 +39,7 @@ export class RegisterComponent {
 
     if (res.result.Out === 1) {
       this.toasterService.success(res.result.Message, 'Success');
+      this.router.navigate(['/user/login']);
     } 
     else if (res.result.Out === -1 && res.result.Error?.length) {
       this.toasterService.error(res.result.Error[0].errorMsg, 'Error');
@@ -47,7 +51,6 @@ export class RegisterComponent {
   (err) => {
     console.error(err);
     const apiErrorMsg = err?.error?.result?.Error?.[0]?.errorMsg;
-
     if (apiErrorMsg) {
       this.toasterService.error(apiErrorMsg, 'Error');
     } else {
