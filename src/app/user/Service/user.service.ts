@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Environment } from 'src/app/environment/environment';
 import { UserModel } from 'src/app/environment/Model';
 
@@ -9,13 +10,22 @@ import { UserModel } from 'src/app/environment/Model';
 })
 
 export class  UserService {
-constructor(private _httpclient:HttpClient){}
+constructor(private _httpclient:HttpClient, private cookie:CookieService){}
 
 registerUser(data: UserModel):Observable<any>{
     return this._httpclient.post<any>(Environment.baseurl+'user/register',data)
 }
-loginUser(data: UserModel):Observable<any>{
-    return this._httpclient.post<any>(Environment.baseurl+'user/login',data)
-}
+loginUser(data: UserModel): Observable<any> {
+    return this._httpclient.post<any>(Environment.baseurl + 'user/login', data)
+      .pipe(
+        tap((res: { token: any; }) => {
+          // assuming your API returns { token: "..." }
+          if (res?.token) {
+            this.cookie.set('authToken', res.token, 7);
+          }
+        })
+      );
+  }
+
  
 }
