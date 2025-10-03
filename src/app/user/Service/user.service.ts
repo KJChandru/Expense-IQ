@@ -18,10 +18,10 @@ registerUser(data: UserModel):Observable<any>{
 loginUser(data: UserModel): Observable<any> {
     return this._httpclient.post<any>(Environment.baseurl + 'user/login', data)
       .pipe(
-        tap((res: { token: any; }) => {
+        tap((res) => {
           // assuming your API returns { token: "..." }
-          if (res?.token) {
-            this.cookie.set('authToken', res.token, 7);
+          if (res.result?.Data[0].column1) {
+            this.cookie.set('authToken', res.result?.Data[0].column1, 7);
           }
         })
       );
