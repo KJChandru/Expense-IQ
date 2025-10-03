@@ -24,8 +24,8 @@ LoginUser(){
   
   this.userService.loginUser(this.LoginForm.value).subscribe(
     res=>{
-      
-      if(res.result.Out=1){
+      // Use strict equality for comparison
+      if(res?.result?.Out === 1){
         this.toasterService.success(res.result.Message, 'Success')
         this.route.navigate(['/expense/dashboard']);
       }
@@ -34,7 +34,7 @@ LoginUser(){
     }
     },
     err=>{
-      const apiErrorMsg =  err.Error.errorMsg;
+      const apiErrorMsg =  err?.Error?.errorMsg || err?.error?.message;
     if (apiErrorMsg) {
       this.toasterService.error(apiErrorMsg, 'Error');
     } else {
