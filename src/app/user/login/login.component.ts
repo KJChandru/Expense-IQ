@@ -34,12 +34,7 @@ LoginUser(){
     }
     },
     err=>{
-      const apiErrorMsg =  err?.Error?.errorMsg || err?.error?.message;
-    if (apiErrorMsg) {
-      this.toasterService.error(apiErrorMsg, 'Error');
-    } else {
-      this.toasterService.error('Server error. Please try again later.', 'Error');
-    }
+      this.toasterService.error(err?.result?.Message, 'Error');
     }
   )
 }

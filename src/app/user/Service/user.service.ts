@@ -20,8 +20,8 @@ loginUser(data: UserModel): Observable<any> {
       .pipe(
         tap((res) => {
           // assuming your API returns { token: "..." }
-          if (res.result?.Data[0].column1) {
-            this.cookie.set('authToken', res.result?.Data[0].column1, 7);
+          if (res.result?.Data[0].token) {
+            this.cookie.set('authToken', res.result?.Data[0].token, 7);
           }
         })
       );

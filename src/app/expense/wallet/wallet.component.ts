@@ -27,6 +27,14 @@ export class WalletComponent implements OnInit {
     this.wallets = [
       { name: 'Main Bank', balance: 1200, currency: 'USD', type: 'bank' },
       { name: 'Cash Wallet', balance: 500, currency: 'USD', type: 'cash' },
+      { name: 'Travel Card', balance: 800, currency: 'USD', type: 'card' },
+      { name: 'Cash Wallet', balance: 500, currency: 'USD', type: 'cash' },
+      { name: 'Travel Card', balance: 800, currency: 'USD', type: 'card' },
+      { name: 'Cash Wallet', balance: 500, currency: 'USD', type: 'cash' },
+      { name: 'Travel Card', balance: 800, currency: 'USD', type: 'card' },
+      { name: 'Cash Wallet', balance: 500, currency: 'USD', type: 'cash' },
+      { name: 'Travel Card', balance: 800, currency: 'USD', type: 'card' },
+      { name: 'Cash Wallet', balance: 500, currency: 'USD', type: 'cash' },
       { name: 'Travel Card', balance: 800, currency: 'USD', type: 'card' }
     ];
   }
@@ -36,6 +44,14 @@ export class WalletComponent implements OnInit {
     return this.wallets.filter(w =>
       w.name.toLowerCase().includes(this.searchText.toLowerCase())
     );
+  }
+
+  getTotalBalance(): number {
+    return this.wallets.reduce((sum, w) => sum + (w.balance || 0), 0);
+  }
+
+  getWalletCount(): number {
+    return this.wallets.length;
   }
 
   getWalletIcon(type: string): string {

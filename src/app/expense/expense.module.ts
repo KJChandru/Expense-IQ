@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ExpenseRoutingModule } from './expense-routing.module';
 import { ExpenseComponent } from './expense.component';
@@ -25,7 +26,9 @@ import { CreateWalletComponent } from './create-wallet/create-wallet.component';
   ],
   imports: [
     CommonModule,
-    ExpenseRoutingModule
-  ]
+    FormsModule,
+    ExpenseRoutingModule,
+    ReactiveFormsModule
+]
 })
 export class ExpenseModule { }
