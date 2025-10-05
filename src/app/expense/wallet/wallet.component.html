@@ -1,57 +1,74 @@
-<div class="p-6 bg-gray-100 min-h-screen">
+<div class="wallet-container">
 
-  <!-- Wallet Card -->
-  <div class="bg-white shadow-md rounded-2xl p-6 mb-6">
-    <h2 class="text-xl font-semibold mb-4 flex justify-between items-center">
-      My Wallets
+  <!-- Header -->
+  <div class="wallet-header">
+    <div class="wallet-header-row">
+      <h1>Wallets</h1>
 
-      <div class="flex gap-3">
-        <button (click)="createWallet()"
-                class="w-10 h-10 flex items-center justify-center bg-blue-600 text-white rounded-full hover:bg-blue-700"
-                title="Create Wallet">
-          <span class="material-icons text-lg">add</span>
+      <div class="wallet-actions">
+        <!-- Search -->
+        <div class="search-box">
+          <span class="material-icons">search</span>
+          <input [(ngModel)]="searchText" type="text" placeholder="Search wallets">
+        </div>
+
+        <!-- Transfer Button -->
+        <button class="btn btn-outline" (click)="transferFunds()">
+          <span class="material-icons">swap_horiz</span>
+          <span>Transfer</span>
         </button>
 
-        <button (click)="transferFunds()"
-                class="w-10 h-10 flex items-center justify-center bg-green-600 text-white rounded-full hover:bg-green-700"
-                title="Transfer Funds">
-          <span class="material-icons text-lg">swap_horiz</span>
+        <!-- Create Wallet Button -->
+        <button class="btn btn-primary" (click)="createWallet()">
+          <span class="material-icons">add</span>
+          <span>New</span>
         </button>
       </div>
-    </h2>
+    </div>
+  </div>
 
-    <!-- Table -->
-    <div class="overflow-x-auto mt-4">
-      <table class="min-w-full border border-gray-200 rounded-lg">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="text-left p-3 font-medium text-gray-600">Wallet Name</th>
-            <th class="text-left p-3 font-medium text-gray-600">Balance</th>
-            <th class="text-left p-3 font-medium text-gray-600">Currency</th>
-            <th class="text-left p-3 font-medium text-gray-600">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let wallet of filteredWallets()" class="border-t border-gray-100 hover:bg-gray-50">
-            <td class="p-3 flex items-center gap-2">
-              <span class="material-icons text-base">{{ getWalletIcon(wallet.type) }}</span>
-              {{ wallet.name }}
-            </td>
-            <td class="p-3">{{ wallet.balance | currency }}</td>
-            <td class="p-3">{{ wallet.currency }}</td>
-            <td class="p-3 flex gap-2">
-              <button class="w-8 h-8 flex items-center justify-center bg-yellow-500 text-white rounded-full hover:bg-yellow-600"
-                      (click)="editWallet(wallet)" title="Edit">
-                <span class="material-icons text-base">edit</span>
-              </button>
-              <button class="w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-full hover:bg-red-600"
-                      (click)="deleteWallet(wallet)" title="Delete">
-                <span class="material-icons text-base">delete</span>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- Wallet Grid -->
+  <div class="wallet-grid">
+    <div *ngFor="let wallet of filteredWallets()" class="wallet-item">
+
+      <!-- Top Row: Icon + Name + Type + Edit -->
+      <div class="wallet-header-row">
+        <div class="wallet-info">
+          <div class="wallet-icon">
+            <span class="material-icons">{{ getWalletIcon(wallet.type) }}</span>
+          </div>
+          <div class="wallet-details">
+            <div class="name">{{ wallet.name }}</div>
+            <div class="type">{{ wallet.type }}</div>
+          </div>
+        </div>
+
+        <button class="btn btn-outline" (click)="editWallet(wallet)">
+          <span class="material-icons">edit</span>
+          <span>Edit</span>
+        </button>
+      </div>
+
+      <!-- Balance Info -->
+      <div class="wallet-balance">
+        <div class="label">Balance</div>
+        <div class="amount">{{ wallet.balance | currency:wallet.currency }}</div>
+        <div class="currency">{{ wallet.currency }}</div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="wallet-actions-row">
+        <button class="btn btn-outline" (click)="transferFunds()">
+          <span class="material-icons">swap_horiz</span>
+          <span>Transfer</span>
+        </button>
+
+        <button class="btn btn-danger" (click)="deleteWallet(wallet)">
+          <span class="material-icons">delete</span>
+          <span>Delete</span>
+        </button>
+      </div>
+
     </div>
   </div>
 
