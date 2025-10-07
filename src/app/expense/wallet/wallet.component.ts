@@ -1,12 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CreateWalletComponent } from '../create-wallet/create-wallet.component'; // updated path
+import { ExpenseService } from '../service/expense.service';
 
-interface Wallet {
-  name: string;
-  balance: number;
-  currency: string;
-  type: 'bank' | 'cash' | 'card';
-}
 
 @Component({
   selector: 'app-wallet',
@@ -16,27 +11,22 @@ interface Wallet {
 export class WalletComponent implements OnInit {
   @ViewChild('createWalletModal') createWalletModal!: CreateWalletComponent;
 
-  wallets: Wallet[] = [];
+  wallets: any[] = [];
   searchText: string = '';
 
+
+  constructor(private expenseService: ExpenseService) { }
   ngOnInit() {
     this.loadWallets();
   }
 
   loadWallets() {
-    this.wallets = [
-      { name: 'Main Bank', balance: 1200, currency: 'USD', type: 'bank' },
-      { name: 'Cash Wallet', balance: 500, currency: 'USD', type: 'cash' },
-      { name: 'Travel Card', balance: 800, currency: 'USD', type: 'card' },
-      { name: 'Cash Wallet', balance: 500, currency: 'USD', type: 'cash' },
-      { name: 'Travel Card', balance: 800, currency: 'USD', type: 'card' },
-      { name: 'Cash Wallet', balance: 500, currency: 'USD', type: 'cash' },
-      { name: 'Travel Card', balance: 800, currency: 'USD', type: 'card' },
-      { name: 'Cash Wallet', balance: 500, currency: 'USD', type: 'cash' },
-      { name: 'Travel Card', balance: 800, currency: 'USD', type: 'card' },
-      { name: 'Cash Wallet', balance: 500, currency: 'USD', type: 'cash' },
-      { name: 'Travel Card', balance: 800, currency: 'USD', type: 'card' }
-    ];
+
+    this.expenseService.GetWalletdetails().subscribe((res) => {
+      this.wallets = res.result.Data; 
+      console.log(this.wallets)// Adjust based on actual response structure
+    });
+
   }
 
   filteredWallets() {
@@ -67,11 +57,11 @@ export class WalletComponent implements OnInit {
     this.createWalletModal.open();
   }
 
-  addWallet(wallet: Wallet) {
-    this.wallets.push(wallet);
-  }
+  // addWallet(wallet: Wallet) {
+  //   this.wallets.push(wallet);
+  // }
 
-  editWallet(wallet: Wallet) { console.log('Edit', wallet); }
-  deleteWallet(wallet: Wallet) { console.log('Delete', wallet); }
-  transferFunds() { console.log('Transfer Funds'); }
+  // editWallet(wallet: Wallet) { console.log('Edit', wallet); }
+  // deleteWallet(wallet: Wallet) { console.log('Delete', wallet); }
+  // transferFunds() { console.log('Transfer Funds'); }
 }
