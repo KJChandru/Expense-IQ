@@ -17,7 +17,6 @@ GetWalletmaster(): Observable<any> {
       .pipe(
         tap((res) => {
           // assuming your API returns { token: "..." }
-          console.log('Wallet created/updated successfully:', res);
           
         })
       );
@@ -27,11 +26,19 @@ CreateUpdateWallet(data: WalletModel): Observable<any> {
       .pipe(
         tap((res) => {
           // assuming your API returns { token: "..." }
-          console.log('Wallet created/updated successfully:', res);
           
         })
       );
   }
 
+GetWalletdetails(): Observable<any> {
+    return this._httpclient.get<any>(Environment.baseurl + 'v1/expense/get/walletDetails', {})
+      .pipe(
+        tap((res) => {
+          // assuming your API returns { token: "..." }
+          
+        })
+      );
+  }
  
 }

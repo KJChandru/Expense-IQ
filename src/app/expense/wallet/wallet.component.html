@@ -3,7 +3,7 @@
   <!-- Header -->
   <div class="wallet-header">
     <div class="wallet-header-row">
-      <h1>Wallets</h1>
+      <h1>My Wallets</h1>
 
       <div class="wallet-actions">
         <!-- Search -->
@@ -13,7 +13,7 @@
         </div>
 
         <!-- Transfer Button -->
-        <button class="btn btn-outline" (click)="transferFunds()">
+        <button class="btn btn-outline" >
           <span class="material-icons">swap_horiz</span>
           <span>Transfer</span>
         </button>
@@ -29,21 +29,21 @@
 
   <!-- Wallet Grid -->
   <div class="wallet-grid">
-    <div *ngFor="let wallet of filteredWallets()" class="wallet-item">
+    <div *ngFor="let wallet of wallets" class="wallet-item">
 
       <!-- Top Row: Icon + Name + Type + Edit -->
       <div class="wallet-header-row">
         <div class="wallet-info">
           <div class="wallet-icon">
-            <span class="material-icons">{{ getWalletIcon(wallet.type) }}</span>
+            <span class="material-icons">{{ getWalletIcon(wallet.typeCode) }}</span>
           </div>
           <div class="wallet-details">
-            <div class="name">{{ wallet.name }}</div>
-            <div class="type">{{ wallet.type }}</div>
+            <div class="name">{{ wallet.walletCode }}</div>
+            <div class="type">{{ wallet.typeCode }}</div>
           </div>
         </div>
 
-        <button class="btn btn-outline" (click)="editWallet(wallet)">
+        <button class="btn btn-outline" >
           <span class="material-icons">edit</span>
           <span>Edit</span>
         </button>
@@ -52,18 +52,18 @@
       <!-- Balance Info -->
       <div class="wallet-balance">
         <div class="label">Balance</div>
-        <div class="amount">{{ wallet.balance | currency:wallet.currency }}</div>
-        <div class="currency">{{ wallet.currency }}</div>
+        <div class="amount">{{ wallet.balanceAmount | currency:wallet.currencyCode }}</div>
+        <div class="currency">{{ wallet.currencyCode }}</div>
       </div>
 
       <!-- Action Buttons -->
       <div class="wallet-actions-row">
-        <button class="btn btn-outline" (click)="transferFunds()">
+        <button class="btn btn-outline" >
           <span class="material-icons">swap_horiz</span>
           <span>Transfer</span>
         </button>
 
-        <button class="btn btn-danger" (click)="deleteWallet(wallet)">
+        <button class="btn btn-danger" >
           <span class="material-icons">delete</span>
           <span>Delete</span>
         </button>
@@ -73,6 +73,6 @@
   </div>
 
   <!-- Create Wallet Modal -->
-  <app-create-wallet #createWalletModal (walletCreated)="addWallet($event)"></app-create-wallet>
+  <app-create-wallet #createWalletModal ></app-create-wallet>
 
 </div>
