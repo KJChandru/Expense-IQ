@@ -73,6 +73,6 @@
   </div>
 
   <!-- Create Wallet Modal -->
-  <app-create-wallet #createWalletModal ></app-create-wallet>
+  <app-create-wallet #createWalletModal (walletCreated)="onWalletCreated($event)"></app-create-wallet> >
 
 </div>

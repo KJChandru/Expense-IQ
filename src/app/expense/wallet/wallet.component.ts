@@ -24,7 +24,6 @@ export class WalletComponent implements OnInit {
 
     this.expenseService.GetWalletdetails().subscribe((res) => {
       this.wallets = res.result.Data; 
-      console.log(this.wallets)// Adjust based on actual response structure
     });
 
   }
@@ -56,6 +55,13 @@ export class WalletComponent implements OnInit {
   createWallet() {
     this.createWalletModal.open();
   }
+
+  onWalletCreated(event: any) {
+  if (event) {
+    this.loadWallets(); 
+  }
+}
+
 
   // addWallet(wallet: Wallet) {
   //   this.wallets.push(wallet);
