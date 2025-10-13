@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 
@@ -8,10 +8,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  constructor(private router: Router) { }
+    private currentViewRef: any;
+  constructor(private router: Router,private viewContainerRef: ViewContainerRef) { }
 
   isActive(path: string): boolean {
     return this.router.url.includes(path);
   }
+  openLogoutPopup(template: TemplateRef<any>) {
+    this.currentViewRef = this.viewContainerRef.createEmbeddedView(template);
+  }
 
+  closePopup() {
+    if (this.currentViewRef) {
+      this.currentViewRef.destroy();
+    }
+  }
+
+  confirmLogout() {
+    this.closePopup();
+    // this.authService.logoutUser();
+  }
 }

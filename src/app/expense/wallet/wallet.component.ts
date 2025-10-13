@@ -28,12 +28,13 @@ export class WalletComponent implements OnInit {
 
   }
 
-  filteredWallets() {
-    if (!this.searchText) return this.wallets;
-    return this.wallets.filter(w =>
-      w.name.toLowerCase().includes(this.searchText.toLowerCase())
-    );
-  }
+ filteredWallets() {
+  if (!this.searchText) return this.wallets;
+  return this.wallets.filter(w =>
+    w.walletCode.toLowerCase().includes(this.searchText.toLowerCase())
+  );
+}
+
 
   getTotalBalance(): number {
     return this.wallets.reduce((sum, w) => sum + (w.balance || 0), 0);
