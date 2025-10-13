@@ -2,9 +2,7 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-header">
-     
-        <!-- <img src="../../../assets/logo.png" alt="Logo" class="logo-img" /> -->
-        Welcome User !
+      Welcome User !
     </div>
 
     <div class="menu">
@@ -37,13 +35,35 @@
           <img src="../../../assets/Menu-icons/settings.png" class="menu-img" />
           <span class="link-text">Settings</span>
         </li>
-        <div class="divider"></div>
       </ul>
+    </div>
+
+    <div class="logout-section" (click)="openLogoutPopup(logoutTemplate)" >
+      <img src="../../../assets/Menu-icons/logout.png" class="menu-img" />
+      <span class="link-text">Logout</span>
     </div>
   </div>
 
-  <!-- Main content area -->
+  <!-- Main Content -->
   <div class="main-content">
     <router-outlet></router-outlet>
   </div>
 </div>
+
+<ng-template #logoutTemplate>
+  <div class="popup-overlay">
+    <div class="modern-popup-card">
+      <div class="modern-popup-icon">
+        <span class="warning-icon">!</span>
+      </div>
+
+      <h3>Are you sure you want to log out?</h3>
+      <p>You’ll need to log in again to access your account.</p>
+
+      <div class="modern-popup-actions">
+        <button class="btn-danger" (click)="confirmLogout()">Yes</button>
+        <button class="btn-secondary" (click)="closePopup()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
