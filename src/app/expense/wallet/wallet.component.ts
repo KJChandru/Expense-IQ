@@ -22,7 +22,7 @@ export class WalletComponent implements OnInit {
 
   loadWallets() {
 
-    this.expenseService.GetWalletdetails().subscribe((res) => {
+    this.expenseService.getWalletDetails().subscribe((res) => {
       this.wallets = res.result.Data; 
     });
 

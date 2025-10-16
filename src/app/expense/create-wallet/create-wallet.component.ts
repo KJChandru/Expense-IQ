@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WalletModel } from '../Model/Wallet';
 import { ExpenseService } from '../service/expense.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-wallet',
@@ -16,7 +17,7 @@ export class CreateWalletComponent {
   @Output() walletCreated = new EventEmitter<any>();
   walletmodel: WalletModel = new WalletModel();
 
-  constructor(private fb: FormBuilder, private expenseService: ExpenseService) {
+  constructor(private fb: FormBuilder, private expenseService: ExpenseService,private toasterService:ToastrService) {
     this.walletFrom = this.fb.group({
       id: ['0'],
       walletName: ['', Validators.required],
@@ -62,10 +63,19 @@ export class CreateWalletComponent {
 
     this.walletmodel = this.walletFrom.value;
 
-    this.expenseService.CreateUpdateWallet(this.walletmodel).subscribe(() => {
-      this.walletFrom.reset();
-      this.walletCreated.emit(true);
-      this.close();
-    });
+    this.expenseService.CreateUpdateWallet(this.walletmodel).subscribe(
+      (res) => {
+        console.log(res);
+        if (res.result.Out == 1) {
+          this.walletFrom.reset();
+          this.walletCreated.emit(true);
+          this.close();
+          this.toasterService.success('Wallet created successfully');
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }
