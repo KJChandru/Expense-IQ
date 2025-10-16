@@ -9,11 +9,15 @@ import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthInterceptor } from './core/auth.interceptor';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { LoadingInterceptor } from './core/loading.interceptor';
+
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   ],
   providers: [
     CookieService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
