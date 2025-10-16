@@ -1,5 +1,6 @@
 import { Component, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { LogoutService } from '../service/logout.service';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
     private currentViewRef: any;
-  constructor(private router: Router,private viewContainerRef: ViewContainerRef) { }
+  constructor(private router: Router,private viewContainerRef: ViewContainerRef,private logoutservice :LogoutService) { }
 
   isActive(path: string): boolean {
     return this.router.url.includes(path);
@@ -26,6 +27,13 @@ export class SidebarComponent {
 
   confirmLogout() {
     this.closePopup();
-    // this.authService.logoutUser();
+    this.logoutservice.LogOutuser().subscribe({
+      next: (res) => {
+
+        this.router.navigate(['user/login']);
+      }
+
+    })
+
   }
 }

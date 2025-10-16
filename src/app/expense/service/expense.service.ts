@@ -1,44 +1,50 @@
-import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { Environment } from 'src/app/environment/environment';
 import { WalletModel } from '../Model/Wallet';
 
+
 @Injectable({
-  providedIn: 'root' 
+  providedIn: 'root'
 })
+export class ExpenseService {
+  constructor(private http: HttpClient, private cookie: CookieService) {}
 
-export class  ExpenseService {
-constructor(private _httpclient:HttpClient, private cookie:CookieService){}
-
-GetWalletmaster(): Observable<any> {
-    return this._httpclient.post<any>(Environment.baseurl + 'v1/expense/get/master', {})
+  GetWalletmaster(): Observable<any> {
+    return this.http.get<any>(`${Environment.baseurl}v1/expense/get/master`, {})
       .pipe(
-        tap((res) => {
-          // assuming your API returns { token: "..." }
-          
-        })
-      );
-  }
-CreateUpdateWallet(data: WalletModel): Observable<any> {
-    return this._httpclient.post<any>(Environment.baseurl + 'v1/expense/CreateUpdateWallet', data)
-      .pipe(
-        tap((res) => {
-          // assuming your API returns { token: "..." }
-          
-        })
+        catchError(this.handleError)
       );
   }
 
-GetWalletdetails(): Observable<any> {
-    return this._httpclient.get<any>(Environment.baseurl + 'v1/expense/get/walletDetails', {})
+  CreateUpdateWallet(data: any): Observable<any> {
+    return this.http.post<any>(`${Environment.baseurl}v1/expense/CreateUpdateWallet`, data)
       .pipe(
-        tap((res) => {
-          // assuming your API returns { token: "..." }
-          
-        })
+        catchError(this.handleError)
       );
   }
- 
+
+  getWalletDetails(): Observable<any> {
+    return this.http.get<any>(`${Environment.baseurl}v1/expense/get/walletDetails`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred';
+    
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else if (error.error?.message) {
+      errorMessage = error.error.message;
+    } else {
+      errorMessage = `Server returned code: ${error.status}`;
+    }
+
+    return throwError(() => new Error(errorMessage));
+  }
 }
