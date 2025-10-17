@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { ExpenseRoutingModule } from './expense-routing.module';
 import { ExpenseComponent } from './expense.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -22,13 +21,14 @@ import { CreateWalletComponent } from './create-wallet/create-wallet.component';
     SettingsComponent,
     SidebarComponent,
     WalletComponent,
-    CreateWalletComponent
+    CreateWalletComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ExpenseRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
 ]
 })
 export class ExpenseModule { }

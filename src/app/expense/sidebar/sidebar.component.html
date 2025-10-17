@@ -52,17 +52,13 @@
 
 <ng-template #logoutTemplate>
   <div class="popup-overlay">
-    <div class="modern-popup-card">
-      <div class="modern-popup-icon">
-        <span class="warning-icon">!</span>
-      </div>
+    <div class="clean-popup-card">
+      <h3>Log out?</h3>
+      <p>You will be signed out and need to log in again to continue.</p>
 
-      <h3>Are you sure you want to log out?</h3>
-      <p>You’ll need to log in again to access your account.</p>
-
-      <div class="modern-popup-actions">
-        <button class="btn-danger" (click)="confirmLogout()">Yes</button>
-        <button class="btn-secondary" (click)="closePopup()">Cancel</button>
+      <div class="popup-actions">
+        <button class="btn-outline" (click)="closePopup()">Cancel</button>
+        <button class="btn-danger" (click)="confirmLogout()">Log out</button>
       </div>
     </div>
   </div>
