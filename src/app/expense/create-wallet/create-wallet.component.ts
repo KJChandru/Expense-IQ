@@ -17,16 +17,17 @@ export class CreateWalletComponent {
   @Output() walletCreated = new EventEmitter<any>();
   walletmodel: WalletModel = new WalletModel();
 
-  constructor(private fb: FormBuilder, private expenseService: ExpenseService,private toasterService:ToastrService) {
+  constructor(
+    private fb: FormBuilder,
+    private expenseService: ExpenseService,
+    private toasterService: ToastrService
+  ) {
     this.walletFrom = this.fb.group({
       id: ['0'],
       walletName: ['', Validators.required],
       walletDesc: [''],
       walletType: ['', Validators.required],
-      initalCreditedAmt: [
-        '',
-        [Validators.required, Validators.min(1)],
-      ],
+      initalCreditedAmt: ['', [Validators.required, Validators.min(1)]],
       currency: ['', Validators.required],
       balanceAmt: ['0'],
     });
@@ -67,7 +68,16 @@ export class CreateWalletComponent {
       (res) => {
         console.log(res);
         if (res.result.Out == 1) {
-          this.walletFrom.reset();
+          this.walletFrom.reset({
+            id: '0',
+            walletName: '',
+            walletDesc: '',
+            walletType: '',
+            initalCreditedAmt: '',
+            currency: '',
+            balanceAmt: '0',
+          });
+
           this.walletCreated.emit(true);
           this.close();
           this.toasterService.success('Wallet created successfully');

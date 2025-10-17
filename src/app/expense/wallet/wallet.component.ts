@@ -45,7 +45,10 @@ export class WalletComponent implements OnInit {
   }
 
   getWalletIcon(type: string): string {
-    switch(type) {
+
+    
+
+    switch(type.toLowerCase()) {
       case 'bank': return 'account_balance';
       case 'cash': return 'attach_money';
       case 'card': return 'credit_card';

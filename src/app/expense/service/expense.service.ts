@@ -34,6 +34,13 @@ export class ExpenseService {
       );
   }
 
+  deleteWallet(id:any):Observable<any>{ 
+    return this.http.put<any>(`${Environment.baseurl}v1/expense/delete/wallet/${id}`,id)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred';
     
