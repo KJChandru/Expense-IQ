@@ -1,0 +1,15 @@
+<div *ngIf="isVisible" class="overlay">
+  <div class="dialog-box" [ngClass]="type">
+    <div class="icon-wrapper">
+      <span class="material-icons-outlined">{{ getIcon(type) }}</span>
+    </div>
+
+    <h3>{{ title }}</h3>
+    <p>{{ message }}</p>
+
+    <div class="actions">
+      <button class="cancel" (click)="onCancel()">Cancel</button>
+      <button class="confirm" (click)="onConfirm()">Confirm</button>
+    </div>
+  </div>
+</div>
