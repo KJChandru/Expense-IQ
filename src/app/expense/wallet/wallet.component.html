@@ -63,7 +63,7 @@
           <span>Transfer</span>
         </button>
 
-        <button class="btn btn-danger"  >
+        <button class="btn btn-danger" (click)="deleteDialogOpen(wallet)" >
           <span class="material-icons">delete</span>
           <span>Delete</span>
         </button>
@@ -76,5 +76,12 @@
   <app-create-wallet #createWalletModal (walletCreated)="onWalletCreated($event)"></app-create-wallet> 
 
 
+<app-confirmation-dialog #deleteDialog
+[type]="'error'"
+[title]="'Delete'"
+[message]="'Are you sure you want to delete the wallet ?'"
+(confirm)="confirmDelete($event)">
+</app-confirmation-dialog>
 
 </div>
+

@@ -10,6 +10,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { CreateWalletComponent } from './create-wallet/create-wallet.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { CreateWalletComponent } from './create-wallet/create-wallet.component';
     FormsModule,
     ExpenseRoutingModule,
     ReactiveFormsModule,
+    SharedModule    
 
 ]
 })

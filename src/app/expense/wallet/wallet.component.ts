@@ -1,40 +1,42 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CreateWalletComponent } from '../create-wallet/create-wallet.component'; // updated path
 import { ExpenseService } from '../service/expense.service';
-
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
-  styleUrls: ['./wallet.component.css']
+  styleUrls: ['./wallet.component.css'],
 })
 export class WalletComponent implements OnInit {
   @ViewChild('createWalletModal') createWalletModal!: CreateWalletComponent;
+  @ViewChild('deleteDialog') deleteDialog!: ConfirmationDialogComponent;
 
   wallets: any[] = [];
   searchText: string = '';
+  walletToDelete: any;
 
-
-  constructor(private expenseService: ExpenseService) { }
+  constructor(
+    private expenseService: ExpenseService,
+    private toasterService: ToastrService
+  ) {}
   ngOnInit() {
     this.loadWallets();
   }
 
   loadWallets() {
-
     this.expenseService.getWalletDetails().subscribe((res) => {
-      this.wallets = res.result.Data; 
+      this.wallets = res.result.Data;
     });
-
   }
 
- filteredWallets() {
-  if (!this.searchText) return this.wallets;
-  return this.wallets.filter(w =>
-    w.walletCode.toLowerCase().includes(this.searchText.toLowerCase())
-  );
-}
-
+  filteredWallets() {
+    if (!this.searchText) return this.wallets;
+    return this.wallets.filter((w) =>
+      w.walletCode.toLowerCase().includes(this.searchText.toLowerCase())
+    );
+  }
 
   getTotalBalance(): number {
     return this.wallets.reduce((sum, w) => sum + (w.balance || 0), 0);
@@ -45,14 +47,15 @@ export class WalletComponent implements OnInit {
   }
 
   getWalletIcon(type: string): string {
-
-    
-
-    switch(type.toLowerCase()) {
-      case 'bank': return 'account_balance';
-      case 'cash': return 'attach_money';
-      case 'card': return 'credit_card';
-      default: return 'account_balance_wallet';
+    switch (type.toLowerCase()) {
+      case 'bank':
+        return 'account_balance';
+      case 'cash':
+        return 'attach_money';
+      case 'card':
+        return 'credit_card';
+      default:
+        return 'account_balance_wallet';
     }
   }
 
@@ -61,17 +64,34 @@ export class WalletComponent implements OnInit {
   }
 
   onWalletCreated(event: any) {
-  if (event) {
-    this.loadWallets(); 
+    if (event) {
+      this.loadWallets();
+    }
   }
-}
 
+  deleteDialogOpen(row: any) {
+    this.walletToDelete = row.walletId;
+    this.deleteDialog.open();
+  }
 
-  // addWallet(wallet: Wallet) {
-  //   this.wallets.push(wallet);
-  // }
+  confirmDelete(event: any) {
+    if (event) {
+      this.expenseService.deleteWallet(this.walletToDelete).subscribe(
+        (res) => {
+          console.log(res);
+          if (res.result.Out == 1) {
+            this.toasterService.success('Wallet deleted successfully');
+            this.loadWallets();
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    } else {
+      this.deleteDialog.close();
+    }
 
-  // editWallet(wallet: Wallet) { console.log('Edit', wallet); }
-  // deleteWallet(wallet: Wallet) { console.log('Delete', wallet); }
-  // transferFunds() { console.log('Transfer Funds'); }
+    this.walletToDelete = 0;
+  }
 }
