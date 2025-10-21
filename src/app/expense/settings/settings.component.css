@@ -1,20 +1,13 @@
-.layout {
-  display: flex;
-  flex-direction: row;
+/* Smooth hover effect */
+.bg-white:hover {
+  transition: all 0.2s ease-in-out;
+  transform: translateY(-2px);
 }
 
-/* Responsive for smaller devices */
-@media (max-width: 768px) {
-  .layout {
-    flex-direction: column;
-  }
-
-  .sidebar {
+/* Responsive layout */
+@media (max-width: 640px) {
+  select,
+  button {
     width: 100%;
-    height: auto;
-  }
-
-  .main-content {
-    padding: 10px;
   }
 }
