@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WalletModel } from '../Model/Wallet';
 import { ExpenseService } from '../service/expense.service';
@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./create-wallet.component.css'],
 })
 export class CreateWalletComponent {
+  @Input() currency: string = '1';
   isOpen = false;
   walletFrom: FormGroup;
   currencyDetails: any[] = [];
@@ -28,7 +29,7 @@ export class CreateWalletComponent {
       walletDesc: [''],
       walletType: ['', Validators.required],
       initalCreditedAmt: ['', [Validators.required, Validators.min(1)]],
-      currency: ['', Validators.required],
+      currency: [this.currency],
       balanceAmt: ['0'],
     });
   }
@@ -74,7 +75,7 @@ export class CreateWalletComponent {
             walletDesc: '',
             walletType: '',
             initalCreditedAmt: '',
-            currency: '',
+            currency: this.currency,
             balanceAmt: '0',
           });
 
