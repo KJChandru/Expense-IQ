@@ -41,6 +41,20 @@ export class ExpenseService {
     );
   }
 
+  savePreferedCurrency(value: string): Observable<any> {
+    return this.http.post<any>(`${Environment.baseurl}v1/expense/save/userPreference/currency/${value}`, {})
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getCurrencyValues(key:any): Observable<any> {
+    return this.http.get<any>(`${Environment.baseurl}v1/expense/get/userPreference/currency`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred';
     

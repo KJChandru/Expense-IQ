@@ -52,8 +52,8 @@
       <!-- Balance Info -->
       <div class="wallet-balance">
         <div class="label">Balance</div>
-        <div class="amount">{{ wallet.balanceAmount | currency:wallet.currencyCode }}</div>
-        <div class="currency">{{ wallet.currencyCode }}</div>
+        <div class="amount">{{ wallet.balanceAmount | currency:selectedCurrencyCode  }}</div>
+        <div class="currency">{{ selectedCurrencyCode  }}</div>
       </div>
 
       <!-- Action Buttons -->
