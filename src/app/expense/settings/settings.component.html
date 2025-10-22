@@ -21,7 +21,7 @@
           <select
             [(ngModel)]="currency"
             class="w-48 px-3 py-2 bg-white border border-neutral-300 rounded-md text-sm text-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-neutral-900">
-            <option *ngFor="let c of currencies" [value]="c.value">{{ c.label }}</option>
+            <option *ngFor="let c of currencyDetails" [value]="c.currencyId">{{ c.currencyName }}</option>
           </select>
         </div>
       </section>
