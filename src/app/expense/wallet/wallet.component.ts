@@ -22,6 +22,7 @@ export class WalletComponent implements OnInit {
   currency: string = '';
   selectedCurrencyName: string = '';
   selectedCurrencyCode: string = '';
+  isGridView: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -96,7 +97,10 @@ export class WalletComponent implements OnInit {
     }
   }
 
-  // ✅ Totals
+toggleView() {
+    this.isGridView = !this.isGridView;
+  }
+  
   getTotalBalance(): number {
     return this.wallets.reduce((sum, w) => sum + (w.balance || 0), 0);
   }
