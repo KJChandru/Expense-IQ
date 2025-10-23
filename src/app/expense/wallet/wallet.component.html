@@ -1,87 +1,151 @@
-<div class="wallet-container">
-
+<div class="p-6 font-poppins text-gray-800">
   <!-- Header -->
-  <div class="wallet-header">
-    <div class="wallet-header-row">
-      <h1>My Wallets</h1>
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+    <h1 class="text-2xl font-semibold mb-4 sm:mb-0">My Wallets</h1>
 
-      <div class="wallet-actions">
-        <!-- Search -->
-        <div class="search-box">
-          <span class="material-icons">search</span>
-          <input [(ngModel)]="searchText" type="text" placeholder="Search wallets">
-        </div>
-
-        <!-- Transfer Button -->
-        <button class="btn btn-outline" >
-          <span class="material-icons">swap_horiz</span>
-          <span>Transfer</span>
-        </button>
-
-        <!-- Create Wallet Button -->
-        <button class="btn btn-primary" (click)="createWallet()">
-          <span class="material-icons">add</span>
-          <span>New</span>
-        </button>
+    <div class="flex flex-wrap items-center gap-3">
+      <!-- Search -->
+      <div class="relative">
+        <span class="material-icons absolute left-3 top-2.5 text-gray-400 text-[20px]">search</span>
+        <input
+          [(ngModel)]="searchText"
+          type="text"
+          placeholder="Search wallets"
+          class="pl-10 pr-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none w-48 sm:w-56 text-sm"
+        />
       </div>
+
+      <!-- View Toggle -->
+      <button
+        (click)="toggleView()"
+        class="flex items-center gap-2 px-3 py-2 border border-gray-200 rounded-xl hover:bg-gray-50 transition text-sm"
+      >
+        <span class="material-icons text-[20px]">
+          {{ isGridView ? 'view_list' : 'grid_view' }}
+        </span>
+        <span>{{ isGridView ? 'List View' : 'Grid View' }}</span>
+      </button>
+
+      <!-- Transfer -->
+      <button
+        class="flex items-center gap-2 px-3 py-2 border border-gray-200 rounded-xl hover:bg-gray-50 transition text-sm"
+      >
+        <span class="material-icons text-[20px]">swap_horiz</span>
+        <span>Transfer</span>
+      </button>
+
+      <!-- New Wallet -->
+      <button
+        class="flex items-center gap-2 bg-indigo-600 text-white px-3 py-2 rounded-xl hover:bg-indigo-700 transition text-sm"
+        (click)="createWallet()"
+      >
+        <span class="material-icons text-[20px]">add</span>
+        <span>New</span>
+      </button>
     </div>
   </div>
 
-  <!-- Wallet Grid -->
-  <div class="wallet-grid">
-    <div *ngFor="let wallet of filteredWallets()" class="wallet-item">
-
-      <!-- Top Row: Icon + Name + Type + Edit -->
+  <!-- Wallets: GRID VIEW -->
+  <div *ngIf="isGridView" class="wallet-grid">
+    <div *ngFor="let wallet of filteredWallets()" class="wallet-item compact group">
+      <!-- Header -->
       <div class="wallet-header-row">
         <div class="wallet-info">
-          <div class="wallet-icon">
+          <div class="wallet-icon small">
             <span class="material-icons">{{ getWalletIcon(wallet.typeCode) }}</span>
           </div>
           <div class="wallet-details">
-            <div class="name">{{ wallet.walletCode }}</div>
-            <div class="type">{{ wallet.typeCode }}</div>
+            <div class="name small">{{ wallet.walletCode }}</div>
+            <div class="type small">{{ wallet.typeCode }}</div>
           </div>
         </div>
 
-        <button class="btn btn-outline" >
-          <span class="material-icons">edit</span>
-          <span>Edit</span>
+        <button class="action-btn invisible group-hover:visible" title="Edit">
+          <span class="material-icons text-[18px] text-gray-500 hover:text-indigo-600">edit</span>
         </button>
       </div>
 
-      <!-- Balance Info -->
-      <div class="wallet-balance">
+      <!-- Balance -->
+      <div class="wallet-balance compact">
         <div class="label">Balance</div>
-        <div class="amount">{{ wallet.balanceAmount | currency:selectedCurrencyCode  }}</div>
-        <div class="currency">{{ selectedCurrencyCode  }}</div>
+        <div class="flex items-end gap-1">
+          <div class="amount">{{ wallet.balanceAmount | currency:selectedCurrencyCode }}</div>
+          <div class="currency">{{ selectedCurrencyCode }}</div>
+        </div>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="wallet-actions-row">
-        <button class="btn btn-outline" >
+      <!-- Actions -->
+      <div class="wallet-actions-row compact">
+        <button class="btn-action btn-transfer">
           <span class="material-icons">swap_horiz</span>
-          <span>Transfer</span>
+          Transfer
         </button>
 
-        <button class="btn btn-danger" (click)="deleteDialogOpen(wallet)" >
+        <button class="btn-action btn-delete" (click)="deleteDialogOpen(wallet)">
           <span class="material-icons">delete</span>
-          <span>Delete</span>
+          Delete
         </button>
       </div>
-
     </div>
   </div>
 
+  <!-- Wallets: LIST VIEW -->
+  <div *ngIf="!isGridView" class="overflow-x-auto rounded-xl border border-gray-100 shadow-sm bg-white">
+    <table class="min-w-full text-sm text-left">
+      <thead class="bg-gray-50 text-gray-600 text-xs uppercase">
+        <tr>
+          <th class="px-6 py-3 font-medium">Wallet</th>
+          <th class="px-6 py-3 font-medium">Type</th>
+          <th class="px-6 py-3 font-medium">Balance</th>
+          <th class="px-6 py-3 font-medium">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <tr *ngFor="let wallet of filteredWallets()" class="hover:bg-gray-50 transition">
+          <td class="px-6 py-4 flex items-center gap-3">
+            <div class="bg-gray-100 p-2 rounded-full">
+              <span class="material-icons text-gray-600 text-[22px]">
+                {{ getWalletIcon(wallet.typeCode) }}
+              </span>
+            </div>
+            <span class="font-medium">{{ wallet.walletCode }}</span>
+          </td>
+          <td class="px-6 py-4 text-gray-700">{{ wallet.typeCode }}</td>
+          <td class="px-6 py-4 font-medium">
+            {{ wallet.balanceAmount | currency:selectedCurrencyCode }}
+            <span class="text-gray-500 ml-1">{{ selectedCurrencyCode }}</span>
+          </td>
+          <td class="px-6 py-4 flex items-center gap-3">
+            <button class="flex items-center gap-1 text-gray-600 hover:text-indigo-600">
+              <span class="material-icons text-[18px]">edit</span>
+              Edit
+            </button>
+            <button
+              class="flex items-center gap-1 text-red-600 hover:text-red-700"
+              (click)="deleteDialogOpen(wallet)"
+            >
+              <span class="material-icons text-[18px]">delete</span>
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <!-- Create Wallet Modal -->
-  <app-create-wallet #createWalletModal [currency]="currency"(walletCreated)="onWalletCreated($event)"></app-create-wallet> 
+  <app-create-wallet
+    #createWalletModal
+    [currency]="currency"
+    (walletCreated)="onWalletCreated($event)">
+  </app-create-wallet>
 
-
-<app-confirmation-dialog #deleteDialog
-[type]="'error'"
-[title]="'Delete'"
-[message]="'Are you sure you want to delete the wallet ?'"
-(confirm)="confirmDelete($event)">
-</app-confirmation-dialog>
-
+  <!-- Delete Confirmation Dialog -->
+  <app-confirmation-dialog
+    #deleteDialog
+    [type]="'error'"
+    [title]="'Delete'"
+    [message]="'Are you sure you want to delete the wallet ?'"
+    (confirm)="confirmDelete($event)">
+  </app-confirmation-dialog>
 </div>
-
