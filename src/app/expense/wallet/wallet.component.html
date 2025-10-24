@@ -90,48 +90,74 @@
   </div>
 
   <!-- Wallets: LIST VIEW -->
-  <div *ngIf="!isGridView" class="overflow-x-auto rounded-xl border border-gray-100 shadow-sm bg-white">
-    <table class="min-w-full text-sm text-left">
-      <thead class="bg-gray-50 text-gray-600 text-xs uppercase">
-        <tr>
-          <th class="px-6 py-3 font-medium">Wallet</th>
-          <th class="px-6 py-3 font-medium">Type</th>
-          <th class="px-6 py-3 font-medium">Balance</th>
-          <th class="px-6 py-3 font-medium">Actions</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-100">
-        <tr *ngFor="let wallet of filteredWallets()" class="hover:bg-gray-50 transition">
-          <td class="px-6 py-4 flex items-center gap-3">
-            <div class="bg-gray-100 p-2 rounded-full">
-              <span class="material-icons text-gray-600 text-[22px]">
-                {{ getWalletIcon(wallet.typeCode) }}
-              </span>
-            </div>
-            <span class="font-medium">{{ wallet.walletCode }}</span>
-          </td>
-          <td class="px-6 py-4 text-gray-700">{{ wallet.typeCode }}</td>
-          <td class="px-6 py-4 font-medium">
-            {{ wallet.balanceAmount | currency:selectedCurrencyCode }}
-            <span class="text-gray-500 ml-1">{{ selectedCurrencyCode }}</span>
-          </td>
-          <td class="px-6 py-4 flex items-center gap-3">
-            <button class="flex items-center gap-1 text-gray-600 hover:text-indigo-600">
+  <div *ngIf="!isGridView" class="overflow-x-auto rounded-2xl border border-gray-200 shadow-sm bg-white">
+  <table class="min-w-full border-collapse text-sm text-gray-700">
+    <!-- Table Head -->
+    <thead>
+      <tr class="bg-gray-100 text-xs uppercase text-gray-600 tracking-wide">
+        <th class="px-6 py-3 text-left font-medium">Wallet</th>
+        <th class="px-6 py-3 text-left font-medium">Type</th>
+        <th class="px-6 py-3 text-left font-medium">Balance</th>
+        <th class="px-6 py-3 text-center font-medium">Actions</th>
+      </tr>
+    </thead>
+
+    <!-- Table Body -->
+    <tbody>
+      <tr
+        *ngFor="let wallet of filteredWallets(); let i = index"
+        [ngClass]="i % 2 === 0 ? 'bg-white' : 'bg-gray-50'"
+        class="border-t border-gray-100 hover:bg-gray-100/50 transition-colors"
+      >
+        <!-- Wallet Column -->
+        <td class="px-6 py-4 flex items-center gap-3">
+          <div class="bg-gray-100 p-2 rounded-full">
+            <span class="material-icons text-gray-600 text-[22px]">
+              {{ getWalletIcon(wallet.typeCode) }}
+            </span>
+          </div>
+          <div>
+            <div class="font-medium text-gray-900">{{ wallet.walletCode }}</div>
+            <!-- <div class="text-xs text-gray-500">{{ wallet.description || '—' }}</div> -->
+          </div>
+        </td>
+
+        <!-- Type -->
+        <td class="px-6 py-4 text-gray-700">
+          <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-indigo-50 text-indigo-700">
+            {{ wallet.typeCode }}
+          </span>
+        </td>
+
+        <!-- Balance -->
+        <td class="px-6 py-4 font-medium text-gray-800">
+          {{ wallet.balanceAmount | currency:selectedCurrencyCode }}
+          <span class="text-gray-500 text-xs ml-1">{{ selectedCurrencyCode }}</span>
+        </td>
+
+        <!-- Actions -->
+        <td class="px-6 py-4 text-center">
+          <div class="flex justify-center gap-3">
+            <button
+              class="flex items-center gap-1 px-3 py-1.5 rounded-md border border-gray-200 text-gray-700 hover:border-indigo-500 hover:text-indigo-600 transition"
+            >
               <span class="material-icons text-[18px]">edit</span>
               Edit
             </button>
             <button
-              class="flex items-center gap-1 text-red-600 hover:text-red-700"
               (click)="deleteDialogOpen(wallet)"
+              class="flex items-center gap-1 px-3 py-1.5 rounded-md border border-red-100 text-red-600 hover:bg-red-50 transition"
             >
               <span class="material-icons text-[18px]">delete</span>
               Delete
             </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
   <!-- Create Wallet Modal -->
   <app-create-wallet
