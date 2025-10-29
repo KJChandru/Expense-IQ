@@ -1,7 +1,7 @@
 <div class="p-6 font-poppins text-gray-800">
   <!-- Header -->
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-    <h1 class="text-2xl font-semibold mb-4 sm:mb-0">My Wallets</h1>
+    <h1 class="text-4xl font-bold mb-4 sm:mb-0">My Wallets</h1>
 
     <div class="flex flex-wrap items-center gap-3">
       <!-- Search -->
@@ -124,15 +124,14 @@
 
         <!-- Type -->
         <td class="px-6 py-4 text-gray-700">
-          <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-indigo-50 text-indigo-700">
+          <span class="inline-flex px-3 py-2 text-xs font-medium rounded-full bg-indigo-50 text-indigo-700">
             {{ wallet.typeCode }}
           </span>
         </td>
 
         <!-- Balance -->
-        <td class="px-6 py-4 font-medium text-gray-800">
-          {{ wallet.balanceAmount | currency:selectedCurrencyCode }}
-          <span class="text-gray-500 text-xs ml-1">{{ selectedCurrencyCode }}</span>
+        <td class="px-3 py-3 font-medium text-gray-800">
+          {{ wallet.balanceAmount   | currency: selectedCurrencyCode }}
         </td>
 
         <!-- Actions -->
