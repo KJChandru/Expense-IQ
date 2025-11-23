@@ -27,12 +27,12 @@
       </button>
 
       <!-- Transfer -->
-      <button
+      <!-- <button
         class="flex items-center gap-2 px-3 py-2 border border-gray-200 rounded-xl hover:bg-gray-50 transition text-sm"
-      >
+      (click)="ontransferAmount()">
         <span class="material-icons text-[20px]">swap_horiz</span>
         <span>Transfer</span>
-      </button>
+      </button> -->
 
       <!-- New Wallet -->
       <button
@@ -76,7 +76,7 @@
 
       <!-- Actions -->
       <div class="wallet-actions-row compact">
-        <button class="btn-action btn-transfer">
+        <button class="btn-action btn-transfer"    (click)="ontransferAmount(wallet)">
           <span class="material-icons">swap_horiz</span>
           Transfer
         </button>
@@ -173,4 +173,16 @@
     [message]="'Are you sure you want to delete the wallet ?'"
     (confirm)="confirmDelete($event)">
   </app-confirmation-dialog>
+<!-- 
+  <app-transfer
+    #transferModal
+    [fromWallet]="fromWallet"
+
+  /> -->
+
+
+  <ng-container #transferContainer></ng-container>
+
+
+   
 </div>

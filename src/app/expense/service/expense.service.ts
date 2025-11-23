@@ -4,7 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Environment } from 'src/app/environment/environment';
-import { WalletModel } from '../Model/Wallet';
+import { TransferModel } from '../Model/Wallet';
 
 
 @Injectable({
@@ -50,6 +50,19 @@ export class ExpenseService {
 
   getCurrencyValues(key:any): Observable<any> {
     return this.http.get<any>(`${Environment.baseurl}v1/expense/get/userPreference/currency`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getWalletForTransfer(walletId: string): Observable<any> {
+     return this.http.get<any>(`${Environment.baseurl}v1/expense/get/Wallet/forTransfer/${walletId}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  transferAmount(params: TransferModel): Observable<any> {
+     return this.http.post<any>(Environment.baseurl+'v1/expense/transfer',params)
       .pipe(
         catchError(this.handleError)
       );

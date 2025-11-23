@@ -1,8 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ComponentRef,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { CreateWalletComponent } from '../create-wallet/create-wallet.component';
 import { ExpenseService } from '../service/expense.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { ToastrService } from 'ngx-toastr';
+import { TransferComponent } from '../transfer/transfer.component';
 
 @Component({
   selector: 'app-wallet',
@@ -12,10 +21,17 @@ import { ToastrService } from 'ngx-toastr';
 export class WalletComponent implements OnInit {
   @ViewChild('createWalletModal') createWalletModal!: CreateWalletComponent;
   @ViewChild('deleteDialog') deleteDialog!: ConfirmationDialogComponent;
+  @ViewChild('transferModal') transferAmountModal!: TransferComponent;
+
+  @ViewChild('transferTemplate', { read: TemplateRef })
+  transferTemplate!: TemplateRef<any>;
+  @ViewChild('transferContainer', { read: ViewContainerRef })
+  transferContainer!: ViewContainerRef;
 
   wallets: any[] = [];
   searchText: string = '';
   walletToDelete: any;
+  initialwallet: any;
 
   // Added for currency preference
   currencyDetails: any[] = [];
@@ -23,17 +39,18 @@ export class WalletComponent implements OnInit {
   selectedCurrencyName: string = '';
   selectedCurrencyCode: string = '';
   isGridView: any;
-
+  fromWallet: any;
+  private transferRef?: ComponentRef<TransferComponent>;
   constructor(
     private expenseService: ExpenseService,
-    private toasterService: ToastrService
+    private toasterService: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.loadWallets();
   }
 
-  // ✅ Step 1: Load Wallets
   loadWallets() {
     this.expenseService.getWalletDetails().subscribe((res) => {
       this.wallets = res.result.Data || [];
@@ -41,7 +58,6 @@ export class WalletComponent implements OnInit {
     });
   }
 
-  // ✅ Step 2: Load Master Currencies, then User Preference
   loadCurrencyMasterAndPreference() {
     this.expenseService.GetWalletmaster().subscribe((res) => {
       this.currencyDetails = res.result?.Data.table || [];
@@ -49,11 +65,8 @@ export class WalletComponent implements OnInit {
     });
   }
 
-  // ✅ Step 3: Get User Currency Preference
   getCurrencyValues() {
     this.expenseService.getCurrencyValues('').subscribe((res) => {
-      console.log('Currency preference fetched:', res);
-
       const prefValue = res.result?.Data?.[0]?.value; // “2” in example
       this.currency = prefValue || '1'; // fallback to INR
 
@@ -68,19 +81,15 @@ export class WalletComponent implements OnInit {
         this.selectedCurrencyName = 'Indian Rupee';
         this.selectedCurrencyCode = 'INR';
       }
-
-      console.log('Selected currency:', this.selectedCurrencyName);
     });
   }
 
-  // ✅ Filter logic for search
   filteredWallets() {
     if (!this.searchText) return this.wallets;
     return this.wallets.filter((w) =>
       w.walletCode.toLowerCase().includes(this.searchText.toLowerCase())
     );
   }
-
 
   getWalletIcon(type: string): string {
     switch (type?.toLowerCase()) {
@@ -97,10 +106,10 @@ export class WalletComponent implements OnInit {
     }
   }
 
-toggleView() {
+  toggleView() {
     this.isGridView = !this.isGridView;
   }
-  
+
   getTotalBalance(): number {
     return this.wallets.reduce((sum, w) => sum + (w.balance || 0), 0);
   }
@@ -108,7 +117,6 @@ toggleView() {
   getWalletCount(): number {
     return this.wallets.length;
   }
-
 
   createWallet() {
     this.createWalletModal.open();
@@ -143,5 +151,35 @@ toggleView() {
     }
 
     this.walletToDelete = 0;
+  }
+
+  ontransferAmount(wallet: any) {
+    Promise.resolve().then(() => {
+      this.transferContainer.clear();
+
+      this.transferRef =
+        this.transferContainer.createComponent(TransferComponent);
+
+      this.transferRef.instance.fromWallet = wallet;
+
+      if (this.transferRef.instance.transfer) {
+        this.transferRef.instance.transfer.fromWalletId =
+          wallet?.walletId ?? '';
+      }
+
+      if (this.transferRef.instance.closed) {
+        const sub = this.transferRef.instance.closed.subscribe(() => {
+          sub.unsubscribe();
+          this.closeTransfer();
+        });
+      }
+      this.transferRef.changeDetectorRef.detectChanges();
+    });
+  }
+
+  closeTransfer() {
+    this.transferContainer.clear();
+    this.transferRef = undefined;
+    this.cdr.detectChanges();
   }
 }
