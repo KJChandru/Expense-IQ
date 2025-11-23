@@ -11,6 +11,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { CreateWalletComponent } from './create-wallet/create-wallet.component';
 import { SharedModule } from '../shared/shared.module';
+import { TransferComponent } from './transfer/transfer.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { SharedModule } from '../shared/shared.module';
     SidebarComponent,
     WalletComponent,
     CreateWalletComponent,
+    TransferComponent
   ],
   imports: [
     CommonModule,

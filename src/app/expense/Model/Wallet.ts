@@ -7,3 +7,10 @@ export class WalletModel {
     currency:string | undefined
     balanceAmt:number | undefined;
 }
+
+export class TransferModel {
+    fromwallet :any| undefined;
+    towallet:any | undefined;
+    amount:number | undefined;
+    description:any | undefined;
+}

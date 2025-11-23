@@ -30,7 +30,9 @@
               "node_modules/ngx-toastr/toastr.css"
 
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/preline/dist/preline.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -94,7 +96,9 @@
               "src/styles.css",
                 "node_modules/ngx-toastr/toastr.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/preline/dist/preline.js"
+            ]
           }
         }
       }
