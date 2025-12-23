@@ -173,6 +173,13 @@ export class WalletComponent implements OnInit {
           this.closeTransfer();
         });
       }
+
+      if (this.transferRef.instance.transferSuccess) {
+        const successSub = this.transferRef.instance.transferSuccess.subscribe(() => {
+          successSub.unsubscribe();
+          this.loadWallets(); // Refresh wallets after successful transfer
+        });
+      }
       this.transferRef.changeDetectorRef.detectChanges();
     });
   }
