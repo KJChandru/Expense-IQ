@@ -12,6 +12,7 @@ export class TransferComponent implements OnInit {
   @Input() wallets: any[] = [];
   @Input() fromWallet: any;
   @Output() closed = new EventEmitter<void>();
+  @Output() transferSuccess = new EventEmitter<void>();
 
   transfer = {
     fromWalletId: '',
@@ -72,12 +73,10 @@ export class TransferComponent implements OnInit {
 
     this.expenseService.transferAmount(model).subscribe((res) => {
      this.toasterService.success('Transfer successful!');
+      this.transferSuccess.emit(); // Emit event to notify parent to refresh wallets
       this.close();
-      this.loadWallets();
     }, (error) => {
       alert('Transfer failed. Please try again.');
     });
-
-    this.close();
   }
 }
