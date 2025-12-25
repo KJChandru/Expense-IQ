@@ -20,8 +20,8 @@ export class SettingsComponent implements OnInit {
   currency: string = 'INR';
 
   OnGetWalletMaster() {
-    this.expenseService.GetWalletmaster().subscribe((res) => {
-      this.currencyDetails = res.result?.Data.table;
+    this.expenseService.GetWalletmaster('currency').subscribe((res) => {
+      this.currencyDetails = res.result?.Data;
       console.log('Wallet master data:', this.currencyDetails);   
        this.getCurrencyValues();
     });

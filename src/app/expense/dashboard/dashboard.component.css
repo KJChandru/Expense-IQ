@@ -18,3 +18,28 @@
     padding: 10px;
   }
 }
+
+:host {
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Date picker icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Modal scrollbar */
+.max-h-\[85vh\]::-webkit-scrollbar {
+  width: 8px;
+}
+
+.max-h-\[85vh\]::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 8px;
+}

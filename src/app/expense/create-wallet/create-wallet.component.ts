@@ -51,9 +51,14 @@ export class CreateWalletComponent {
   }
 
   OnGetWalletMaster() {
-    this.expenseService.GetWalletmaster().subscribe((res) => {
-      this.currencyDetails = res.result?.Data.table;
-      this.walletDetails = res.result?.Data.table1;
+    this.expenseService.GetWalletmaster('currency').subscribe((res) => {
+      this.currencyDetails = res.result?.Data;
+      //this.walletDetails = res.result?.Data.table1;
+    });
+
+     this.expenseService.GetWalletmaster('WalletType').subscribe((res) => {
+      // this.currencyDetails = res.result?.Data.table;
+      this.walletDetails = res.result?.Data;
     });
   }
 
