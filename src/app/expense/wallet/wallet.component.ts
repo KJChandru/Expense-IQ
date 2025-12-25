@@ -59,8 +59,8 @@ export class WalletComponent implements OnInit {
   }
 
   loadCurrencyMasterAndPreference() {
-    this.expenseService.GetWalletmaster().subscribe((res) => {
-      this.currencyDetails = res.result?.Data.table || [];
+    this.expenseService.GetWalletmaster('currency').subscribe((res) => {
+      this.currencyDetails = res.result?.Data || [];
       this.getCurrencyValues();
     });
   }

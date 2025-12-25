@@ -1,5 +1,238 @@
-<div class="layout">
- 
-    <p>Home works!</p>
+<div class="p-6 text-gray-800">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
+      <p class="text-sm text-gray-500">Track your expenses and income</p>
+    </div>
 
+    <!-- Add Transaction Button -->
+    <button
+      (click)="openModal()"
+      class="inline-flex items-center gap-2 bg-indigo-600 text-white
+             px-5 py-2.5 rounded-lg text-sm font-medium
+             hover:bg-indigo-700 transition
+             shadow-sm hover:shadow-md"
+    >
+      <span class="material-icons text-base">add</span>
+      Add Transaction
+    </button>
+  </div>
+
+  <!-- Transaction Table -->
+  <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+    <div class="px-5 py-3 border-b bg-gray-50">
+      <h2 class="text-sm font-semibold text-gray-800">Transaction History</h2>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+          <tr>
+            <th class="px-5 py-3 text-left">Type</th>
+            <th class="px-5 py-3 text-left">Date</th>
+            <th class="px-5 py-3 text-left">Wallet</th>
+            <th class="px-5 py-3 text-left">Category</th>
+            <th class="px-5 py-3 text-left">Amount</th>
+            <th class="px-5 py-3 text-left">Notes</th>
+            <th class="px-5 py-3 text-left">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y">
+          <tr
+            *ngFor="let t of transactions"
+            class="hover:bg-gray-50 transition"
+          >
+            <td class="px-5 py-3 capitalize">
+              <span
+                class="px-2 py-1 rounded-full text-xs font-medium"
+                [ngClass]="
+                  t.type === 'expense'
+                    ? 'bg-red-100 text-red-700'
+                    : 'bg-green-100 text-green-700'
+                "
+              >
+                {{ t.type }}
+              </span>
+            </td>
+
+            <td class="px-5 py-3 text-gray-700">
+              {{ t.date }}
+            </td>
+
+            <td class="px-5 py-3 font-medium">
+              {{ t.walletName }}
+            </td>
+
+            <td class="px-5 py-3">
+              <span class="px-2 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs">
+                {{ t.categoryName }}
+              </span>
+            </td>
+
+            <td
+              class="px-5 py-3 font-semibold"
+              [ngClass]="t.type === 'expense' ? 'text-red-600' : 'text-green-600'"
+            >
+              {{ t.type === 'expense' ? '-' : '+' }}{{ t.amount | currency }}
+            </td>
+
+            <td class="px-5 py-3 text-gray-500">
+              {{ t.notes || '—' }}
+            </td>
+
+            <td class="px-5 py-3">
+              <div class="flex items-center gap-2">
+                <button
+                  (click)="openEditModal(t)"
+                  class="p-1.5 text-indigo-600 hover:bg-indigo-50 rounded transition"
+                  title="Edit transaction"
+                >
+                  <span class="material-icons text-base">edit</span>
+                </button>
+                <button
+                  (click)="deleteTransaction(t.id)"
+                  class="p-1.5 text-red-600 hover:bg-red-50 rounded transition"
+                  title="Delete transaction"
+                >
+                  <span class="material-icons text-base">delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Empty state -->
+          <tr *ngIf="transactions.length === 0">
+            <td colspan="7" class="px-6 py-12 text-center text-gray-400">
+              No transactions yet
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal Overlay -->
+  <div
+    *ngIf="isModalOpen"
+    class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+    (click)="closeModal()"
+  >
+    <!-- Modal -->
+    <div
+      class="bg-white w-full max-w-lg rounded-xl shadow-xl"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- Header -->
+      <div class="px-5 py-3 border-b flex items-center justify-between">
+        <div>
+          <h3 class="text-sm font-semibold text-gray-900">
+            {{ isEditMode ? 'Edit Transaction' : 'Add Transaction' }}
+          </h3>
+          <p class="text-xs text-gray-500">Expense or income entry</p>
+        </div>
+        <button
+          (click)="closeModal()"
+          class="text-gray-400 hover:text-gray-600"
+        >
+          <span class="material-icons text-lg">close</span>
+        </button>
+      </div>
+
+      <!-- Type Toggle -->
+      <div class="px-5 py-3 border-b flex gap-2">
+        <button
+          type="button"
+          (click)="setTransactionType('expense')"
+          class="flex-1 py-2 rounded-lg text-sm font-medium"
+          [ngClass]="transactionType === 'expense'
+            ? 'bg-red-600 text-white'
+            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+        >
+          Expense
+        </button>
+
+        <button
+          type="button"
+          (click)="setTransactionType('income')"
+          class="flex-1 py-2 rounded-lg text-sm font-medium"
+          [ngClass]="transactionType === 'income'
+            ? 'bg-green-600 text-white'
+            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+        >
+          Income
+        </button>
+      </div>
+
+      <!-- Form -->
+      <form
+        [formGroup]="transactionForm"
+        (ngSubmit)="onSubmit()"
+        class="p-5 space-y-4"
+      >
+        <select
+          formControlName="wallet"
+          class="w-full px-3 py-2.5 border rounded-lg text-sm"
+        >
+          <option value="">Select wallet</option>
+          <option *ngFor="let w of wallets" [value]="w.walletId">
+            {{ w.walletCode }}
+          </option>
+        </select>
+
+        <input
+          type="number"
+          formControlName="amount"
+          placeholder="Amount"
+          class="w-full px-3 py-2.5 border rounded-lg text-sm"
+        />
+
+        <select
+          formControlName="category"
+          class="w-full px-3 py-2.5 border rounded-lg text-sm"
+        >
+          <option value="">Select category</option>
+          <option *ngFor="let c of categories" [value]="c.categoryId">
+            {{ c.categoryName }}
+          </option>
+        </select>
+
+        <input
+          type="date"
+          formControlName="date"
+          class="w-full px-3 py-2.5 border rounded-lg text-sm"
+        />
+
+        <textarea
+          formControlName="notes"
+          rows="3"
+          placeholder="Notes (optional)"
+          class="w-full px-3 py-2.5 border rounded-lg text-sm resize-none"
+        ></textarea>
+
+        <!-- Actions -->
+        <div class="flex gap-2 pt-3 border-t">
+          <button
+            type="button"
+            (click)="closeModal()"
+            class="flex-1 py-2.5 text-sm rounded-lg border hover:bg-gray-50"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            [disabled]="transactionForm.invalid"
+            class="flex-1 py-2.5 text-sm rounded-lg text-white font-medium"
+            [ngClass]="transactionType === 'expense'
+              ? 'bg-red-600 hover:bg-red-700'
+              : 'bg-green-600 hover:bg-green-700'"
+          >
+            {{ isEditMode ? 'Update' : 'Save' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

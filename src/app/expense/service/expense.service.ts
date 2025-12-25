@@ -13,8 +13,8 @@ import { TransferModel } from '../Model/Wallet';
 export class ExpenseService {
   constructor(private http: HttpClient, private cookie: CookieService) {}
 
-  GetWalletmaster(): Observable<any> {
-    return this.http.get<any>(`${Environment.baseurl}v1/expense/get/master`, {})
+  GetWalletmaster(type : string): Observable<any> {
+    return this.http.get<any>(`${Environment.baseurl}v1/expense/get/master/${type}`, {})
       .pipe(
         catchError(this.handleError)
       );
@@ -63,6 +63,35 @@ export class ExpenseService {
   }
   transferAmount(params: TransferModel): Observable<any> {
      return this.http.post<any>(Environment.baseurl+'v1/expense/transfer',params)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  // Transaction API Methods
+  addTransaction(data: any): Observable<any> {
+    return this.http.post<any>(`${Environment.baseurl}v1/expense/addUpdate/transaction`, data)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  updateTransaction(id: number, data: any): Observable<any> {
+    return this.http.post<any>(`${Environment.baseurl}v1/expense/addUpdate/transaction`, { ...data, id: id })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getTransactions(): Observable<any> {
+    return this.http.get<any>(`${Environment.baseurl}v1/expense/transaction/get`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  deleteTransaction(id: number): Observable<any> {
+    return this.http.put<any>(`${Environment.baseurl}v1/expense/delete/transaction/${id}`, id)
       .pipe(
         catchError(this.handleError)
       );
