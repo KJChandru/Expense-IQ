@@ -41,6 +41,10 @@ export class RecurringComponent implements OnInit {
     { value: 'yearly', label: 'Yearly' }
   ];
 
+  // Pagination
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+
   constructor(
     private fb: FormBuilder,
     private expenseService: ExpenseService,
@@ -267,7 +271,7 @@ export class RecurringComponent implements OnInit {
               amount: t.amount,
               categoryId: category?.categoryId || 0,
               categoryName: t.typeName || 'Unknown',
-              notes: t.notes || '',
+              notes: t.name || '',
               transactionType: t.transactionType || 'expense',
               frequency: t.frequency || 'monthly',
               startDate: formattedStartDate,
@@ -279,6 +283,7 @@ export class RecurringComponent implements OnInit {
         } else {
           this.recurringTransactions = [];
         }
+        this.currentPage = 1; // Reset to first page on load
       },
       (err) => {
         this.toastr.error('Failed to load recurring transactions');
@@ -440,6 +445,22 @@ export class RecurringComponent implements OnInit {
           this.toastr.error('Failed to add recurring transaction. Please try again.');
         }
       );
+    }
+  }
+
+  // Pagination Helpers
+  get paginatedTransactions(): RecurringTransaction[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.recurringTransactions.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.recurringTransactions.length / this.itemsPerPage);
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
     }
   }
 }
