@@ -1,5 +1,282 @@
-<div class="layout">
-  <div class="main-content">
-    <p>stats works!</p>
+<div class="min-h-screen bg-[#F5F6FA] font-sans">
+
+  <!-- TOP NAVIGATION -->
+  <div class="bg-white border-b border-gray-100 px-6 py-3">
+    <div class="max-w-[1400px] mx-auto flex items-center justify-between">
+
+      <!-- Logo + Nav -->
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-[#1A3636] rounded-lg flex items-center justify-center">
+            <span class="text-white font-black text-sm">E</span>
+          </div>
+        </div>
+
+        <nav class="flex items-center gap-1">
+          <button class="px-4 py-2 bg-[#1A3636] text-white text-sm font-semibold rounded-lg">Dashboard</button>
+          <button
+            class="px-4 py-2 text-gray-500 text-sm font-medium hover:text-gray-900 transition-colors">Tracker</button>
+          <button
+            class="px-4 py-2 text-gray-500 text-sm font-medium hover:text-gray-900 transition-colors">Transactions</button>
+          <button
+            class="px-4 py-2 text-gray-500 text-sm font-medium hover:text-gray-900 transition-colors">Calendar</button>
+          <button
+            class="px-4 py-2 text-gray-500 text-sm font-medium hover:text-gray-900 transition-colors">Analytics</button>
+          <button
+            class="px-4 py-2 text-gray-500 text-sm font-medium hover:text-gray-900 transition-colors">Settings</button>
+        </nav>
+      </div>
+
+      <!-- Right Icons -->
+      <div class="flex items-center gap-4">
+        <button class="text-gray-400 hover:text-gray-600"><span class="material-icons">search</span></button>
+        <button class="text-gray-400 hover:text-gray-600"><span
+            class="material-icons">notifications_none</span></button>
+        <div class="w-10 h-10 rounded-full bg-amber-100 overflow-hidden">
+          <img src="https://i.pravatar.cc/40" alt="Avatar" class="w-full h-full object-cover">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="max-w-[1400px] mx-auto p-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- LEFT COLUMN (2/3 width) -->
+      <div class="lg:col-span-2 space-y-6">
+
+        <!-- 3 KPI CARDS -->
+        <div class="grid grid-cols-3 gap-4">
+          <!-- Income -->
+          <div class="bg-white rounded-2xl p-5 border border-gray-100">
+            <div class="flex items-center justify-between mb-4">
+              <p class="text-sm font-semibold text-gray-700">Income</p>
+              <button class="text-gray-300 hover:text-gray-500"><span
+                  class="material-icons text-lg">more_horiz</span></button>
+            </div>
+            <div class="flex items-end gap-3">
+              <h3 class="text-2xl font-bold text-gray-900">₹9,580.00</h3>
+              <span
+                class="text-xs font-semibold text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-full mb-1">+40%</span>
+            </div>
+            <p class="text-xs text-gray-400 mt-2">Than last month</p>
+          </div>
+
+          <!-- Expenses -->
+          <div class="bg-white rounded-2xl p-5 border border-gray-100">
+            <div class="flex items-center justify-between mb-4">
+              <p class="text-sm font-semibold text-gray-700">Expenses</p>
+              <button class="text-gray-300 hover:text-gray-500"><span
+                  class="material-icons text-lg">more_horiz</span></button>
+            </div>
+            <div class="flex items-end gap-3">
+              <h3 class="text-2xl font-bold text-gray-900">₹1,580.00</h3>
+              <span
+                class="text-xs font-semibold text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-full mb-1">+5%</span>
+            </div>
+            <p class="text-xs text-gray-400 mt-2">Than last month</p>
+          </div>
+
+          <!-- Savings -->
+          <div class="bg-white rounded-2xl p-5 border border-gray-100">
+            <div class="flex items-center justify-between mb-4">
+              <p class="text-sm font-semibold text-gray-700">Savings</p>
+              <button class="text-gray-300 hover:text-gray-500"><span
+                  class="material-icons text-lg">more_horiz</span></button>
+            </div>
+            <div class="flex items-end gap-3">
+              <h3 class="text-2xl font-bold text-gray-900">₹8,000.00</h3>
+              <span
+                class="text-xs font-semibold text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-full mb-1">+30%</span>
+            </div>
+            <p class="text-xs text-gray-400 mt-2">Than last month</p>
+          </div>
+        </div>
+
+        <!-- TOTAL BALANCE + BAR CHART -->
+        <div class="bg-white rounded-2xl p-6 border border-gray-100">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <p class="text-sm font-semibold text-gray-700 mb-2">Total Balance</p>
+              <div class="flex items-end gap-3">
+                <h2 class="text-3xl font-bold text-gray-900">₹9,580.00</h2>
+                <span class="text-sm font-semibold text-emerald-500 mb-1">↗ +5%</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-1 bg-gray-50 p-1 rounded-lg">
+              <button class="px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 rounded-md">Week</button>
+              <button class="px-3 py-1.5 text-xs font-semibold text-white bg-[#1A3636] rounded-md">Month</button>
+              <button class="px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 rounded-md">Year</button>
+            </div>
+          </div>
+
+          <!-- Bar Chart -->
+          <div class="h-64">
+            <canvas id="balanceChart"></canvas>
+          </div>
+        </div>
+
+        <!-- TRANSACTION HISTORY -->
+        <div class="bg-white rounded-2xl p-6 border border-gray-100">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-bold text-gray-900">Transaction History</h3>
+            <div class="flex items-center gap-3">
+              <div class="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg border border-gray-100">
+                <span class="material-icons text-gray-400 text-lg">search</span>
+                <input type="text" placeholder="Search" class="bg-transparent text-sm outline-none w-20">
+              </div>
+              <button
+                class="flex items-center gap-2 px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">
+                <span class="material-icons text-base">filter_list</span> Filter
+              </button>
+            </div>
+          </div>
+
+          <table class="w-full text-left text-sm">
+            <thead>
+              <tr class="text-xs text-gray-400 uppercase border-b border-gray-100">
+                <th class="pb-4 font-medium">Platform</th>
+                <th class="pb-4 font-medium">Date</th>
+                <th class="pb-4 font-medium">Amount ($)</th>
+                <th class="pb-4 font-medium">Status</th>
+                <th class="pb-4 font-medium">Transaction Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tx of transactions" class="border-b border-gray-50">
+                <td class="py-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                      <span class="material-icons text-gray-500 text-sm">{{ tx.icon }}</span>
+                    </div>
+                    <span class="font-medium text-gray-900">{{ tx.platform }}</span>
+                  </div>
+                </td>
+                <td class="py-4 text-gray-500">
+                  <div class="flex items-center gap-1">
+                    <span class="material-icons text-gray-300 text-sm">schedule</span>
+                    {{ tx.date }}
+                  </div>
+                </td>
+                <td class="py-4 font-medium text-gray-900">{{ tx.amount }}</td>
+                <td class="py-4">
+                  <span class="px-3 py-1 text-xs font-semibold rounded-full"
+                    [ngClass]="tx.status === 'Complete' ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'">
+                    {{ tx.status }}
+                  </span>
+                </td>
+                <td class="py-4 text-gray-500">{{ tx.type }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDEBAR -->
+      <div class="space-y-6">
+
+        <!-- SAVINGS DONUT -->
+        <div class="bg-white rounded-2xl p-6 border border-gray-100">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-bold text-gray-900">Savings</h3>
+            <button class="flex items-center gap-1 text-sm text-gray-400 hover:text-gray-600">
+              <span class="material-icons text-base">tune</span> All
+            </button>
+          </div>
+
+          <!-- Donut Chart -->
+          <div class="relative w-40 h-40 mx-auto mb-6">
+            <canvas id="savingsDonut"></canvas>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span class="text-xs text-gray-400">Total</span>
+              <span class="text-xl font-bold text-[#1A3636]">₹23,000</span>
+            </div>
+          </div>
+
+          <!-- Savings Goals -->
+          <div class="space-y-4">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-sm font-medium text-gray-700">Home</span>
+                <span class="text-sm font-bold text-gray-900">₹15,000<span
+                    class="text-gray-400 font-normal">/₹20,000</span></span>
+              </div>
+              <div class="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                <div class="bg-[#1A3636] h-full rounded-full" style="width: 75%"></div>
+              </div>
+              <p class="text-xs text-gray-400 mt-1 text-right">75%</p>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-sm font-medium text-gray-700">Emergency Fund</span>
+                <span class="text-sm font-bold text-gray-900">₹7,500<span
+                    class="text-gray-400 font-normal">/₹15,000</span></span>
+              </div>
+              <div class="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                <div class="bg-amber-400 h-full rounded-full" style="width: 50%"></div>
+              </div>
+              <p class="text-xs text-gray-400 mt-1 text-right">50%</p>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-sm font-medium text-gray-700">Vacation</span>
+                <span class="text-sm font-bold text-gray-900">₹5,00<span
+                    class="text-gray-400 font-normal">/₹2,000</span></span>
+              </div>
+              <div class="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                <div class="bg-lime-400 h-full rounded-full" style="width: 25%"></div>
+              </div>
+              <p class="text-xs text-gray-400 mt-1 text-right">25%</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- MY CARDS -->
+        <div class="bg-white rounded-2xl p-6 border border-gray-100">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold text-gray-900">My Cards <span class="text-gray-400 font-normal">(3)</span></h3>
+            <button class="text-sm font-medium text-gray-500 hover:text-gray-900">+ Add Card</button>
+          </div>
+
+          <!-- Stacked Cards Visual -->
+          <div class="relative h-48 mb-4">
+            <div class="absolute top-0 left-0 right-0 bg-[#1A3636] h-10 rounded-xl opacity-20"></div>
+            <div class="absolute top-4 left-2 right-2 bg-[#2D4A4A] h-10 rounded-xl opacity-40"></div>
+            <div
+              class="absolute top-8 left-4 right-4 bg-gradient-to-br from-[#3D5A5A] to-[#1A3636] rounded-2xl p-5 text-white shadow-xl">
+              <p class="text-xs opacity-70 mb-1">Bank of Marina</p>
+              <p class="text-lg font-bold tracking-widest mt-8 mb-6">3234 8678 4234 7628</p>
+              <div class="flex items-end justify-between">
+                <div>
+                  <p class="text-[10px] opacity-60 uppercase">Card Holder name</p>
+                  <p class="text-sm font-semibold">Maya Singh</p>
+                </div>
+                <div>
+                  <p class="text-[10px] opacity-60 uppercase">Expiry date</p>
+                  <p class="text-sm font-semibold">08/24</p>
+                </div>
+                <span class="text-2xl font-bold italic opacity-80">VISA</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="grid grid-cols-2 gap-3">
+            <button
+              class="py-3 border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-50 flex items-center justify-center gap-2">
+              <span class="material-icons text-base">arrow_downward</span> Receive Money
+            </button>
+            <button
+              class="py-3 border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-50 flex items-center justify-center gap-2">
+              <span class="material-icons text-base">arrow_upward</span> Send Money
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 </div>
