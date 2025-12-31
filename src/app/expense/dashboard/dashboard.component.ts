@@ -47,20 +47,17 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.loadInitialData();
+    this.loadTransactions();
   }
 
   loadInitialData() {
     // Load wallets
     this.expenseService.getWalletDetails().subscribe((res) => {
       this.wallets = res.result?.Data || [];
-      // Load transactions after wallets are loaded
-      this.loadTransactions();
     });
     this.expenseService.GetWalletmaster('category').subscribe((res) => {
        this.categories = res.result?.Data || [];
        console.log('Categories loaded:', this.categories);
-       // Load transactions after categories are loaded (will reload if already loaded)
-       this.loadTransactions();
     });
 
     // Load categories - if service method exists, otherwise use temp data
@@ -84,12 +81,18 @@ export class DashboardComponent implements OnInit {
       (res) => {
         console.log('Transactions API Response:', res);
         if (res.result?.Data && Array.isArray(res.result.Data)) {
-          this.transactions = res.result.Data.map((t: any, index: number) => {
-            // Parse transactionDate - handle ISO string
+          this.transactions = res.result.Data.map((t: any) => {
+            // Parse date - handle both ISO string and formatted date
             let formattedDate = '';
-            if (t.transactionDate) {
+            if (t.date) {
               try {
-                formattedDate = this.formatDate(new Date(t.transactionDate));
+                formattedDate = this.formatDate(new Date(t.date));
+              } catch (e) {
+                formattedDate = t.date; // Use as-is if parsing fails
+              }
+            } else if (t.createdDate) {
+              try {
+                formattedDate = this.formatDate(new Date(t.createdDate));
               } catch (e) {
                 formattedDate = this.formatDate(new Date());
               }
@@ -97,24 +100,16 @@ export class DashboardComponent implements OnInit {
               formattedDate = this.formatDate(new Date());
             }
 
-            // Find walletId by matching walletCode
-            const wallet = this.wallets.find(w => w.walletCode === t.walletCode);
-            const walletId = wallet?.walletId || 0;
-
-            // Find categoryId by matching categoryName
-            const category = this.categories.find(c => c.categoryName === t.categoryName);
-            const categoryId = category?.categoryId || 0;
-
             return {
-              id: t.transactionId || t.id || (index + 1), // Use index as fallback if no ID
-              wallet: walletId,
-              walletName: t.walletCode || 'Unknown',
+              id: t.transactionId || t.id,
+              wallet: t.walletId || t.wallet,
+              walletName: t.walletName || t.walletCode || 'Unknown',
               amount: t.amount,
-              category: categoryId,
+              category: t.categoryId || t.category,
               categoryName: t.categoryName || 'Unknown',
-              notes: t.notes || '',
+              notes: t.notes || t.description || '',
               date: formattedDate,
-              type: t.transactionType || 'expense'
+              type: t.type || (t.amount < 0 ? 'expense' : 'income')
             };
           });
           console.log('Loaded transactions:', this.transactions);

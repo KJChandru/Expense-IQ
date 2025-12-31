@@ -97,6 +97,38 @@ export class ExpenseService {
       );
   }
 
+  // Recurring Transaction API Methods
+  addRecurringTransaction(data: any): Observable<any> {
+    if (!data.recurringTransactionId) {
+      data.recurringTransactionId = 0;
+    }
+    return this.http.post<any>(`${Environment.baseurl}v1/expense/recurring/addUpdate`, data)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  updateRecurringTransaction(id: number, data: any): Observable<any> {
+    return this.http.post<any>(`${Environment.baseurl}v1/expense/recurring/addUpdate`, data)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getRecurringTransactions(): Observable<any> {
+    return this.http.get<any>(`${Environment.baseurl}v1/expense/recurringtransaction/get`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  deleteRecurringTransaction(id: number): Observable<any> {
+    return this.http.put<any>(`${Environment.baseurl}v1/expense/recurring/delete/${id}`, id)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred';
     

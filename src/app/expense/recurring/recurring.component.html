@@ -1,5 +1,292 @@
-<div class="layout">
-  <div class="main-content">
-    <p>Recurring works!</p>
+<div class="min-h-screen bg-white p-8 font-sans text-gray-900">
+
+  <!-- Minimal Header -->
+  <div class="max-w-7xl mx-auto mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-bold tracking-tight text-gray-900">Recurring Expenses</h1>
+      <p class="text-gray-500 text-sm mt-1">Overview of your scheduled payments and subscriptions.</p>
+    </div>
+
+    <button (click)="openModal()"
+      class="inline-flex items-center gap-2 bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-black transition-all shadow-sm">
+      <span class="material-icons text-[18px]">add</span>
+      <span>Add New</span>
+    </button>
+  </div>
+
+  <div class="max-w-7xl mx-auto space-y-8">
+
+    <!-- Stats Row: Clean, Bordered Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Stat 1: Monthly Payable -->
+      <div class="p-6 rounded-xl border border-gray-100 bg-white shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)]">
+        <div class="flex items-start justify-between mb-4">
+          <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
+            <span class="material-icons text-xl">calendar_today</span>
+          </div>
+          <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Monthly</span>
+        </div>
+        <p class="text-3xl font-bold text-gray-900 tracking-tight">{{ totalMonthlyPayable | currency }}</p>
+        <p class="text-sm text-gray-500 mt-1">Total projected monthly cost</p>
+      </div>
+
+      <!-- Stat 2: Total Paid (Placeholder) -->
+      <div class="p-6 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-start justify-between mb-4">
+          <div class="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
+            <span class="material-icons text-xl">check_circle</span>
+          </div>
+          <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Paid</span>
+        </div>
+        <p class="text-3xl font-bold text-gray-900 tracking-tight">₹79,494</p>
+        <p class="text-sm text-gray-500 mt-1">Total amount paid to date</p>
+      </div>
+
+      <!-- Stat 3: Pending (Placeholder) -->
+      <div class="p-6 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-start justify-between mb-4">
+          <div class="p-2 bg-orange-50 text-orange-600 rounded-lg">
+            <span class="material-icons text-xl">pending</span>
+          </div>
+          <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Pending</span>
+        </div>
+        <p class="text-3xl font-bold text-gray-900 tracking-tight">₹80,946</p>
+        <p class="text-sm text-gray-500 mt-1">Remaining loan balance</p>
+      </div>
+
+    </div>
+
+    <!-- Data Grid -->
+    <div class="rounded-xl border border-gray-200 bg-white overflow-hidden">
+      <!-- Table Header/Filter Area -->
+      <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/30">
+        <h3 class="text-base font-semibold text-gray-900">Active Subscriptions</h3>
+        <!-- Simple Search/Filter could go here -->
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm text-gray-600">
+          <thead class="bg-gray-50 border-b border-gray-100 text-xs uppercase font-medium text-gray-500 tracking-wider">
+            <tr>
+              <th class="px-6 py-3">Transaction Name</th>
+              <th class="px-6 py-3">Category</th>
+              <th class="px-6 py-3">Frequency</th>
+              <th class="px-6 py-3">Amount</th>
+              <th class="px-6 py-3">Next Due</th>
+              <th class="px-6 py-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-50">
+            <tr *ngIf="recurringTransactions.length === 0">
+              <td colspan="6" class="px-6 py-16 text-center text-gray-400">
+                <span class="material-icons text-3xl mb-2 opacity-50">toc</span>
+                <p>No recurring transactions found.</p>
+              </td>
+            </tr>
+
+            <tr *ngFor="let rt of recurringTransactions" class="hover:bg-gray-50/60 transition-colors group">
+
+              <!-- Name -->
+              <td class="px-6 py-4 font-medium text-gray-900">
+                {{ rt.notes || 'Untitled' }}
+              </td>
+
+              <!-- Category Badge -->
+              <td class="px-6 py-4">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border"
+                  [ngClass]="rt.categoryName && rt.categoryName.toLowerCase().includes('loan') 
+                     ? 'bg-blue-50 text-blue-700 border-blue-100' 
+                     : 'bg-gray-50 text-gray-600 border-gray-200'">
+                  {{ rt.categoryName }}
+                </span>
+              </td>
+
+              <!-- Frequency -->
+              <td class="px-6 py-4 capitalize text-gray-500">
+                Every {{ rt.startDate | date:'d' }}{{ (rt.startDate | date:'d') === '1' ? 'st' : ((rt.startDate |
+                date:'d') === '2' ? 'nd' : ((rt.startDate | date:'d') === '3' ? 'rd' : 'th')) }}
+                <!-- ({{ rt.frequency }}) - implied monthly by user request -->
+              </td>
+
+              <!-- Amount -->
+              <td class="px-6 py-4 font-semibold text-gray-900">
+                {{ rt.amount | currency }}
+              </td>
+
+              <!-- Next Due -->
+              <td class="px-6 py-4 text-gray-500">
+                {{ rt.nextOccurrence || rt.startDate | date:'mediumDate' }}
+              </td>
+
+              <!-- Actions -->
+              <td class="px-6 py-4 text-right">
+                <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button (click)="openEditModal(rt)" class="text-gray-400 hover:text-indigo-600 transition-colors">
+                    <span class="material-icons text-[18px]">edit</span>
+                  </button>
+                  <button (click)="$event.stopPropagation(); "
+                    class="text-gray-400 hover:text-red-600 transition-colors">
+                    <span class="material-icons text-[18px]">delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PREMIUM MODAL OVERLAY (Maintained exact requested style) -->
+  <div *ngIf="isModalOpen"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity"
+    (click)="closeModal()">
+
+    <!-- Modal Card -->
+    <div class="bg-white w-full max-w-xl rounded-xl shadow-2xl transform transition-all overflow-hidden font-sans"
+      (click)="$event.stopPropagation()">
+
+      <!-- Top Bar -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+        <h3 class="text-base font-bold text-gray-800 tracking-tight">Recurring Expense</h3>
+        <button (click)="closeModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+          <span class="material-icons text-xl">close</span>
+        </button>
+      </div>
+
+      <!-- Main Content -->
+      <div class="px-8 py-6">
+        <!-- Secondary Header -->
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold text-gray-900">
+            {{ isEditMode ? 'Edit Recurring' : 'New Recurring' }}
+          </h2>
+        </div>
+
+        <!-- Form -->
+        <form [formGroup]="recurringForm" (ngSubmit)="onSubmit()" class="space-y-5">
+
+          <!-- Row 1: Type & Name -->
+          <div class="grid grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-bold text-gray-600 mb-1.5">Type</label>
+              <div class="relative">
+                <select formControlName="categoryId"
+                  class="w-full px-3 py-2.5 border border-blue-500 rounded-lg text-sm bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all appearance-none font-medium">
+                  <option value="">Select Type</option>
+                  <option *ngFor="let c of categories" [value]="c.recurringTypeID">{{ c.typeName }}</option>
+                </select>
+                <span
+                  class="material-icons absolute right-2.5 top-2.5 text-gray-500 text-lg pointer-events-none">expand_more</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-600 mb-1.5">Name</label>
+              <input type="text" formControlName="notes" placeholder="e.g., Car Loan"
+                class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all">
+            </div>
+          </div>
+
+          <!-- Row 2: Loan Only Fields -->
+          <div class="grid grid-cols-2 gap-5" *ngIf="isLoanCategory">
+            <div>
+              <label class="block text-xs font-bold text-gray-600 mb-1.5">Principal Amount</label>
+              <div class="relative">
+                <span class="absolute left-3 top-2.5 text-gray-400 text-sm">$</span>
+                <input type="number" formControlName="principalAmount" placeholder="0.00"
+                  class="w-full pl-7 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 focus:outline-none focus:border-blue-500 transition-all">
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-600 mb-1.5">Annual Interest Rate (%)</label>
+              <input type="number" formControlName="interestRate" placeholder="e.g., 12.5" step="0.01"
+                class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 focus:outline-none focus:border-blue-500 transition-all">
+            </div>
+          </div>
+
+          <!-- Row 3: Tenure & EMI -->
+          <div class="grid grid-cols-2 gap-5">
+            <!-- Tenure: ALL TYPES -->
+            <div>
+              <label class="block text-xs font-bold text-gray-600 mb-1.5">Tenure (Months)</label>
+              <input type="number" formControlName="tenureMonths" placeholder="e.g., 36"
+                class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 focus:outline-none focus:border-blue-500 transition-all">
+            </div>
+
+            <!-- EMI / Amount -->
+            <div>
+              <label class="block text-xs font-bold text-gray-600 mb-1.5">
+                {{ isLoanCategory ? 'Monthly EMI' : 'Amount' }}
+              </label>
+              <div class="relative">
+                <span class="absolute left-3 top-2.5 text-gray-400 text-sm">$</span>
+                <input type="number" formControlName="monthlyEmi" placeholder="0.00" [readonly]="isLoanCategory"
+                  [ngClass]="{'bg-gray-50 text-gray-500': isLoanCategory, 'bg-white text-gray-600': !isLoanCategory}"
+                  class="w-full pl-7 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-500 transition-all">
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 4: Payment Day & Date -->
+          <div class="grid grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-bold text-gray-600 mb-1.5">Payment Day</label>
+              <div class="relative">
+                <select formControlName="paymentDay"
+                  class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-white text-gray-600 focus:outline-none focus:border-blue-500 transition-all appearance-none">
+                  <option value="">Select day</option>
+                  <option *ngFor="let d of [].constructor(31); let i = index" [value]="i + 1">{{ i + 1 }}</option>
+                </select>
+                <span
+                  class="material-icons absolute right-2.5 top-2.5 text-gray-400 text-lg pointer-events-none">expand_more</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-600 mb-1.5">First Payment Date</label>
+              <div class="relative">
+                <input type="date" formControlName="startDate"
+                  class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-white text-gray-600 focus:outline-none focus:border-blue-500 transition-all">
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 5: Recurrence & Wallet -->
+          <div class="grid grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-bold text-gray-600 mb-1.5">Recurrence</label>
+              <div class="relative">
+                <input type="text" value="Monthly" disabled
+                  class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 text-gray-500 focus:outline-none cursor-not-allowed">
+              </div>
+            </div>
+
+            <!-- Wallet: ALL TYPES -->
+            <div>
+              <label class="block text-xs font-bold text-gray-600 mb-1.5">Wallet</label>
+              <div class="relative">
+                <select formControlName="walletId"
+                  class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-white text-gray-600 focus:outline-none focus:border-blue-500 transition-all appearance-none">
+                  <option value="">Select Wallet</option>
+                  <option *ngFor="let w of wallets" [value]="w.walletId">{{ w.walletCode }}</option>
+                </select>
+                <span
+                  class="material-icons absolute right-2.5 top-2.5 text-gray-400 text-lg pointer-events-none">expand_more</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Button -->
+          <div class="pt-4">
+            <button type="submit" [disabled]="recurringForm.invalid"
+              class="w-full py-3 bg-blue-100/80 text-blue-600 font-semibold rounded-lg hover:bg-blue-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+              {{ isEditMode ? 'Update EMI' : 'Create EMI' }}
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
   </div>
 </div>
